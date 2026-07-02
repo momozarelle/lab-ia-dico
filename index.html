@@ -3,155 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Les Mots de l'IA — Espace de Co-construction</title>
+    <title>Glossaire interactif de l'IA pour le marketing</title>
     
+    <!-- Favicon Officiel (Petit rond bleu) -->
     <link rel="icon" type="image/png" href="https://goviudqrftefrnrdamxk.supabase.co/storage/v1/object/public/Visuels%20Lab%20IA/rond.png">
     
+    <!-- Tailwind CSS v4 CDN -->
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <!-- Supabase JS Client CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Google Fonts - Alliance Inter (Moderne) & Playfair Display (Plume/Calligraphique) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,400;1,500&display=swap" rel="stylesheet">
     
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8fafc;
-            color: #0f172a;
+            background-color: #fbfbfa; /* Blanc cassé type Claude */
+            color: #191919;
         }
-        h1, h2, .font-adetem {
-            font-family: 'Montserrat', sans-serif;
+        .font-serif-plume {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
         }
         .accordion-content {
             transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease-in-out;
         }
     </style>
 </head>
-<body class="min-h-screen selection:bg-cyan-500/20 selection:text-cyan-900">
+<body class="min-h-screen selection:bg-stone-200 selection:text-stone-900">
 
-    <header class="border-b border-slate-200 bg-white sticky top-0 z-50 shadow-xs">
-        <div class="max-w-4xl mx-auto px-6 h-24 flex items-center justify-between">
-            <div class="flex items-center">
-                <img 
-                    src="https://goviudqrftefrnrdamxk.supabase.co/storage/v1/object/public/Visuels%20Lab%20IA/logo%20lab%20IA.png" 
-                    alt="Logo Le Lab IA ADETEM" 
-                    class="h-24 w-auto object-contain"
-                />
-            </div>
-            <div class="bg-amber-50 text-amber-800 border border-amber-200 text-[11px] font-bold px-3 py-1 rounded-md uppercase tracking-wider">
-                Espace Éditeur Actif
-            </div>
+    <!-- Header Minimaliste -->
+    <header class="border-b border-stone-200/60 bg-[#fbfbfa] sticky top-0 z-50">
+        <div class="max-w-3xl mx-auto px-6 h-20 flex items-center justify-between">
+            <img 
+                src="https://goviudqrftefrnrdamxk.supabase.co/storage/v1/object/public/Visuels%20Lab%20IA/logo%20lab%20IA.png" 
+                alt="Logo Le Lab IA ADETEM" 
+                class="h-16 w-auto object-contain grayscale opacity-90"
+            />
+            <span class="text-[11px] font-mono tracking-wider text-stone-400 uppercase">Version collaborative interne</span>
         </div>
     </header>
 
-    <main class="max-w-4xl mx-auto px-6 py-12 md:py-16">
+    <!-- Conteneur Principal -->
+    <main class="max-w-3xl mx-auto px-6 py-12 md:py-16">
         
-        <section class="mb-12 border-b border-slate-200 pb-10">
-            <h1 class="text-4xl md:text-5xl font-black tracking-tight text-[#002B49] mb-4 uppercase">
-                Les Mots de l'IA
+        <!-- Hero Section -->
+        <section class="mb-12 border-b border-stone-200/60 pb-10">
+            <h1 class="text-4xl md:text-5xl font-normal text-stone-950 tracking-tight mb-3 font-serif-plume">
+                Les mots de l'IA
             </h1>
-            <p class="text-slate-600 text-base md:text-lg font-normal max-w-2xl leading-relaxed">
-                Le glossaire interactif du marketing augmenté. Version collaborative interne connectée en temps réel à la base Supabase.
+            <p class="text-stone-500 text-base md:text-lg font-light leading-relaxed">
+                Glossaire interactif de l'IA pour le marketing. Version collaborative interne connectée en temps réel.
             </p>
         </section>
 
-        <section class="mb-10 p-5 rounded-lg bg-white border border-slate-200 shadow-xs">
-            <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center">
-                <svg class="w-3.5 h-3.5 mr-2 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
-                </svg>
-                Les termes les plus recherchés (Top 5)
-            </h2>
+        <!-- Section Top 5 Raccourcis Épurés -->
+        <section class="mb-10 p-5 rounded-xl bg-white border border-stone-200/60 shadow-xs">
+            <h2 class="text-xs font-mono tracking-wider text-stone-400 uppercase mb-3">Les termes les plus recherchés</h2>
             <div id="trending-container" class="flex flex-wrap gap-2">
-                <span class="text-xs text-slate-400">Chargement des favoris...</span>
+                <button type="button" onclick="scrollToAndOpen('IAG')" class="px-3 py-1.5 text-xs bg-stone-50 text-stone-600 border border-stone-200/60 rounded-md hover:bg-stone-950 hover:text-white hover:border-stone-950 transition-all cursor-pointer">IAG</button>
+                <button type="button" onclick="scrollToAndOpen('Large Language Model')" class="px-3 py-1.5 text-xs bg-stone-50 text-stone-600 border border-stone-200/60 rounded-md hover:bg-stone-950 hover:text-white hover:border-stone-950 transition-all cursor-pointer">Large Language Model</button>
+                <button type="button" onclick="scrollToAndOpen('Prompt')" class="px-3 py-1.5 text-xs bg-stone-50 text-stone-600 border border-stone-200/60 rounded-md hover:bg-stone-950 hover:text-white hover:border-stone-950 transition-all cursor-pointer">Prompt Engineering</button>
+                <button type="button" onclick="scrollToAndOpen('Hallucination')" class="px-3 py-1.5 text-xs bg-stone-50 text-stone-600 border border-stone-200/60 rounded-md hover:bg-stone-950 hover:text-white hover:border-stone-950 transition-all cursor-pointer">Hallucinations</button>
             </div>
         </section>
 
-        <section class="mb-8 sticky top-28 z-40">
+        <!-- Barre de Recherche Épurée Monochrome -->
+        <section class="mb-10 sticky top-24 z-40 bg-[#fbfbfa]/90 backdrop-blur-md py-2">
             <div class="flex items-center gap-2">
-                <div class="relative flex-1 group">
-                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-cyan-600 transition-colors">
-                        <svg class="w-5 h-5 stroke-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                        </svg>
-                    </div>
+                <div class="relative flex-1">
                     <input 
                         type="text" 
                         id="search-input" 
                         placeholder="Rechercher un terme, un concept..." 
-                        class="w-full pl-12 pr-4 py-3.5 bg-white border border-slate-200 rounded-lg shadow-sm text-slate-900 placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-600 transition-all text-base"
+                        class="w-full pl-4 pr-4 py-3 bg-white border border-stone-200 rounded-lg shadow-2xs text-stone-900 placeholder-stone-400 focus:outline-hidden focus:border-stone-400 transition-all text-sm"
                     />
                 </div>
                 <button 
                     type="button"
                     onclick="triggerSearch()"
-                    class="px-6 py-3.5 bg-[#002B49] text-white font-bold text-sm uppercase tracking-wider rounded-lg shadow-sm hover:bg-cyan-800 transition-all cursor-pointer"
+                    class="px-5 py-3 bg-stone-950 text-white font-medium text-sm rounded-lg shadow-sm hover:bg-stone-800 transition-all cursor-pointer"
                 >
                     Rechercher
                 </button>
             </div>
         </section>
 
-        <section class="mb-10">
-            <div id="loading-state" class="py-12 text-center text-slate-500 font-medium">
-                <div class="inline-block animate-spin rounded-full h-5 w-5 border-2 border-slate-300 border-t-cyan-600"></div>
+        <!-- Liste Principale du Dictionnaire -->
+        <section class="mb-12">
+            <div id="loading-state" class="py-12 text-center text-stone-400">
+                <div class="inline-block animate-spin rounded-full h-4 w-4 border-2 border-stone-200 border-t-stone-600"></div>
             </div>
-
-            <div id="dictionary-list" class="bg-white border border-slate-200 rounded-lg shadow-xs divide-y divide-slate-100 overflow-hidden hidden"></div>
+            <div id="dictionary-list" class="bg-white border border-stone-200/80 rounded-xl shadow-xs divide-y divide-stone-100 overflow-hidden hidden"></div>
         </section>
 
-        <section class="mb-12">
+        <!-- Section d'Ajout d'un Nouveau Mot -->
+        <section class="mb-16 border-t border-stone-200/60 pt-8">
             <button 
                 type="button"
                 id="toggle-add-form-btn"
                 onclick="toggleAddForm()" 
-                class="w-full py-4 bg-[#002B49] text-white font-bold text-sm uppercase tracking-wider rounded-lg shadow-sm hover:bg-cyan-900 transition-all cursor-pointer flex items-center justify-center space-x-2"
+                class="w-full py-3.5 bg-white text-stone-800 font-medium text-sm border border-stone-200 rounded-xl shadow-2xs hover:bg-stone-50 transition-all cursor-pointer flex items-center justify-center space-x-2"
             >
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path>
-                </svg>
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                 <span>Ajouter un nouveau mot</span>
             </button>
 
-            <div id="add-word-form-container" class="mt-4 bg-white border border-slate-200 rounded-lg p-6 shadow-xs max-h-0 overflow-hidden opacity-0 transition-all duration-300 ease-in-out">
-                <div class="grid grid-cols-1 gap-4 text-sm">
+            <!-- Formulaire d'ajout -->
+            <div id="add-word-form-container" class="mt-4 bg-white border border-stone-200 rounded-xl p-6 shadow-2xs max-h-0 overflow-hidden opacity-0 transition-all duration-300 ease-in-out">
+                <div class="grid grid-cols-1 gap-4 text-xs tracking-wide">
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">Nom du mot / Notion</label>
-                        <input type="text" id="new-term" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md focus:outline-cyan-600" placeholder="Ex: Multimodalité">
+                        <label class="block font-medium text-stone-500 uppercase mb-1">Nom du mot</label>
+                        <input type="text" id="new-term" class="w-full p-2.5 bg-stone-50/50 border border-stone-200 rounded-lg focus:outline-hidden focus:border-stone-400 text-sm">
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">Définition factuelle</label>
-                        <textarea id="new-definition" rows="3" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md focus:outline-cyan-600" placeholder="Saisir la description technique..."></textarea>
+                        <label class="block font-medium text-stone-500 uppercase mb-1">Définition factuelle</label>
+                        <textarea id="new-definition" rows="3" class="w-full p-2.5 bg-stone-50/50 border border-stone-200 rounded-lg focus:outline-hidden focus:border-stone-400 text-sm"></textarea>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="block font-bold text-slate-700 mb-1">Enjeux & Opportunités</label>
-                            <textarea id="new-opportunities" rows="3" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md focus:outline-cyan-600" placeholder="Pour un marketeur..."></textarea>
+                            <label class="block font-medium text-stone-500 uppercase mb-1">Enjeux & Opportunités</label>
+                            <textarea id="new-opportunities" rows="3" class="w-full p-2.5 bg-stone-50/50 border border-stone-200 rounded-lg focus:outline-hidden focus:border-stone-400 text-sm"></textarea>
                         </div>
                         <div>
-                            <label class="block font-bold text-slate-700 mb-1">Facteurs de Risque</label>
-                            <textarea id="new-risks" rows="3" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md focus:outline-cyan-600" placeholder="Points de vigilance stratégiques..."></textarea>
+                            <label class="block font-medium text-stone-500 uppercase mb-1">Facteurs de Risque</label>
+                            <textarea id="new-risks" rows="3" class="w-full p-2.5 bg-stone-50/50 border border-stone-200 rounded-lg focus:outline-hidden focus:border-stone-400 text-sm"></textarea>
                         </div>
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">Question de pilotage managérial</label>
-                        <input type="text" id="new-questions" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md focus:outline-cyan-600" placeholder="La question clé à se poser...">
+                        <label class="block font-medium text-stone-500 uppercase mb-1">Question de pilotage managérial</label>
+                        <input type="text" id="new-questions" class="w-full p-2.5 bg-stone-50/50 border border-stone-200 rounded-lg focus:outline-hidden focus:border-stone-400 text-sm">
                     </div>
                     <div class="pt-2 flex items-center space-x-2">
-                        <button 
-                            type="button"
-                            onclick="createWord()" 
-                            class="px-6 py-3 bg-emerald-600 text-white font-bold uppercase tracking-wider rounded-md hover:bg-emerald-700 shadow-sm transition-all cursor-pointer text-xs"
-                        >
-                            Ajouter mon mot
-                        </button>
-                        <button 
-                            type="button"
-                            onclick="toggleAddForm()" 
-                            class="px-6 py-3 bg-slate-100 text-slate-700 font-bold uppercase tracking-wider rounded-md hover:bg-slate-200 shadow-sm transition-all cursor-pointer text-xs"
-                        >
-                            Annuler
-                        </button>
+                        <button type="button" onclick="createWord()" class="px-5 py-2.5 bg-stone-950 text-white font-medium rounded-lg hover:bg-stone-800 cursor-pointer">Ajouter mon mot</button>
+                        <button type="button" onclick="toggleAddForm()" class="px-5 py-2.5 bg-stone-100 text-stone-600 rounded-lg hover:bg-stone-200 cursor-pointer">Annuler</button>
                     </div>
                 </div>
             </div>
@@ -159,7 +146,7 @@
 
     </main>
 
-    <footer class="py-12"></footer>
+    <footer class="py-8 text-center text-xs text-stone-400 font-mono"></footer>
 
     <script>
         const SUPABASE_URL = 'https://goviudqrftefrnrdamxk.supabase.co';
@@ -190,33 +177,24 @@
                 
                 sortAndRenderAll();
             } catch (error) {
-                console.error('Erreur initialisation Supabase:', error.message);
+                console.error(error.message);
             }
         }
 
         function sortAndRenderAll() {
-            // Tri global A-Z par ordre alphabétique strict
             dictionaryData.sort((a, b) => a.term.localeCompare(b.term, 'fr', { sensitivity: 'base' }));
-            
             renderTrendingHeader();
             renderDictionary(dictionaryData);
         }
 
-        // Rendu dynamique du Top 5 en haut selon l'état Supabase is_trending
         function renderTrendingHeader() {
             const trendingItems = dictionaryData.filter(item => item.is_trending).slice(0, 5);
-            
             if (trendingItems.length === 0) {
-                trendingContainer.innerHTML = `<span class="text-xs text-slate-400 font-medium italic">Aucun mot mis en avant. Cliquez sur l'étoile d'un mot ci-dessous pour l'ajouter ici.</span>`;
+                trendingContainer.innerHTML = `<span class="text-xs text-stone-400 font-light italic">Aucun mot favori sélectionné. Cliquez sur l’étoile d’un mot pour piloter cette section.</span>`;
                 return;
             }
-
             trendingContainer.innerHTML = trendingItems.map(item => `
-                <button 
-                    type="button"
-                    onclick="scrollToAndOpen('${item.term.replace(/'/g, "\\'")}')" 
-                    class="px-3 py-1.5 text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200 rounded-md hover:bg-cyan-50 hover:border-cyan-200 hover:text-cyan-700 transition-all cursor-pointer font-adetem"
-                >
+                <button type="button" onclick="scrollToAndOpen('${item.term.replace(/'/g, "\\'")}')" class="px-3 py-1.5 text-xs bg-stone-50 text-stone-700 border border-stone-200 rounded-md hover:bg-stone-950 hover:text-white hover:border-stone-950 transition-all cursor-pointer font-medium">
                     ${item.term.split(' (')[0]}
                 </button>
             `).join('');
@@ -225,330 +203,26 @@
         function renderDictionary(data) {
             if (!dictionaryList) return;
             dictionaryList.innerHTML = data.map(item => `
-                <div class="dictionary-item group transition-colors duration-150 bg-white" id="term-${slugify(item.term)}">
+                <div class="dictionary-item bg-white" id="term-${slugify(item.term)}">
                     
-                    <div class="w-full flex items-center justify-between px-6 py-5 border-b border-slate-100 bg-white">
-                        <button 
-                            type="button"
-                            onclick="toggleAccordion('content-${item.id}', 'icon-${item.id}')"
-                            class="flex-1 text-left cursor-pointer focus:outline-hidden"
-                        >
-                            <span class="text-lg font-bold text-[#002B49] group-hover:text-cyan-700 transition-colors tracking-tight font-adetem">
+                    <!-- Ligne Principale Épurée Claude Style -->
+                    <div class="w-full flex items-center justify-between px-6 py-4.5 border-b border-stone-100 bg-white">
+                        <button type="button" onclick="toggleAccordion('content-${item.id}', 'icon-${item.id}')" class="flex-1 text-left cursor-pointer focus:outline-hidden">
+                            <span class="text-base font-semibold text-stone-900 hover:text-stone-600 transition-colors tracking-tight">
                                 ${item.term}
                             </span>
                         </button>
                         
-                        <div class="flex items-center space-x-2">
-                            <button 
-                                type="button"
-                                onclick="toggleTrendingState('${item.id}', ${item.is_trending})"
-                                class="text-base p-1.5 rounded hover:bg-slate-100 cursor-pointer select-none transition-all"
-                                title="${item.is_trending ? 'Retirer du Top 5' : 'Ajouter au Top 5'}"
-                            >
-                                ${item.is_trending ? '⭐' : '☆'}
+                        <!-- Actions Linéaires Fines -->
+                        <div class="flex items-center space-x-1.5">
+                            <!-- Étoile Favorite -->
+                            <button type="button" onclick="toggleTrendingState('${item.id}', ${item.is_trending})" class="p-1.5 rounded-md hover:bg-stone-50 text-sm cursor-pointer select-none transition-all" title="Piloter l'affichage Top 5">
+                                ${item.is_trending ? '<span class="text-amber-500">★</span>' : '<span class="text-stone-300 hover:text-stone-500">☆</span>'}
                             </button>
-                            
-                            <button 
-                                type="button"
-                                onclick="enableInlineEdit('${item.id}')" 
-                                class="text-xs font-bold text-cyan-600 bg-cyan-50 px-2.5 py-2 rounded hover:bg-cyan-100 transition-all cursor-pointer flex items-center space-x-1"
-                            >
-                                <span>🖋️ Modifier</span>
+                            <!-- Modifier -->
+                            <button type="button" onclick="enableInlineEdit('${item.id}')" class="p-1.5 rounded-md hover:bg-stone-50 text-stone-400 hover:text-stone-900 transition-all cursor-pointer" title="Modifier le contenu">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
                             </button>
-                            
-                            <button 
-                                type="button"
-                                onclick="deleteWord('${item.id}', '${item.term.replace(/'/g, "\\'")}')" 
-                                class="text-xs font-bold text-rose-600 bg-rose-50 px-2.5 py-2 rounded hover:bg-rose-100 transition-all cursor-pointer flex items-center space-x-1"
-                                title="Supprimer définitivement"
-                            >
-                                <span>🗑️</span>
-                            </button>
-                            
-                            <button type="button" onclick="toggleAccordion('content-${item.id}', 'icon-${item.id}')" class="p-1 cursor-pointer">
-                                <svg id="icon-${item.id}" class="w-4 h-4 text-slate-400 transform transition-transform duration-300 ease-in-out" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div id="content-${item.id}" class="accordion-content max-h-0 overflow-hidden opacity-0 bg-slate-50/30">
-                        
-                        <div class="px-6 pb-6 pt-4 space-y-4 text-slate-800" id="view-mode-${item.id}">
-                            <div class="text-base leading-relaxed text-slate-600 font-normal border-b border-slate-100 pb-4">
-                                ${item.definition || '<em class="text-slate-400">Aucune définition renseignée.</em>'}
-                            </div>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
-                                <div class="p-4 bg-white border border-slate-200 rounded-md shadow-2xs">
-                                    <div class="text-xs font-bold text-emerald-700 uppercase tracking-wider mb-1 flex items-center">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span> Enjeux & Opportunités
-                                    </div>
-                                    <p class="text-xs text-slate-600 leading-relaxed">${item.opportunities || 'N/A'}</p>
-                                </div>
-                                <div class="p-4 bg-white border border-slate-200 rounded-md shadow-2xs">
-                                    <div class="text-xs font-bold text-rose-700 uppercase tracking-wider mb-1 flex items-center">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-rose-500 mr-1.5"></span> Facteurs de Risque
-                                    </div>
-                                    <p class="text-xs text-slate-600 leading-relaxed">${item.risks || 'N/A'}</p>
-                                </div>
-                            </div>
-                            ${item.management_questions ? `
-                                <div class="p-4 bg-[#002B49] text-white rounded-md shadow-xs mt-2">
-                                    <div class="text-[10px] font-bold uppercase tracking-widest text-cyan-300 mb-1">
-                                        Question de pilotage managérial
-                                    </div>
-                                    <p class="text-sm font-medium leading-relaxed">${item.management_questions}</p>
-                                </div>
-                            ` : ''}
-                        </div>
-
-                        <div class="px-6 pb-6 pt-4 space-y-4 text-slate-800 hidden" id="edit-mode-${item.id}">
-                            <div class="space-y-4 text-sm">
-                                <div>
-                                    <label class="block font-bold text-slate-700 mb-1">Nom du mot / Notion (Titre)</label>
-                                    <input type="text" id="edit-term-${item.id}" value="${item.term || ''}" class="w-full p-2.5 bg-white border border-slate-200 rounded-md focus:outline-cyan-600 font-bold text-[#002B49]">
-                                </div>
-                                <div>
-                                    <label class="block font-bold text-slate-700 mb-1">Définition factuelle</label>
-                                    <textarea id="edit-def-${item.id}" rows="3" class="w-full p-2.5 bg-white border border-slate-200 rounded-md focus:outline-cyan-600">${item.definition || ''}</textarea>
-                                </div>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                        <label class="block font-bold text-slate-700 mb-1">Enjeux & Opportunités</label>
-                                        <textarea id="edit-opp-${item.id}" rows="3" class="w-full p-2.5 bg-white border border-slate-200 rounded-md focus:outline-cyan-600">${item.opportunities || ''}</textarea>
-                                    </div>
-                                    <div>
-                                        <label class="block font-bold text-slate-700 mb-1">Facteurs de Risque</label>
-                                        <textarea id="edit-risk-${item.id}" rows="3" class="w-full p-2.5 bg-white border border-slate-200 rounded-md focus:outline-cyan-600">${item.risks || ''}</textarea>
-                                    </div>
-                                </div>
-                                <div>
-                                    <label class="block font-bold text-slate-700 mb-1">Question de pilotage managérial</label>
-                                    <input type="text" id="edit-ques-${item.id}" value="${item.management_questions || ''}" class="w-full p-2.5 bg-white border border-slate-200 rounded-md focus:outline-cyan-600">
-                                </div>
-                                <div class="flex items-center space-x-2 pt-2 pb-2">
-                                    <button type="button" onclick="saveInlineEdit('${item.id}')" class="px-5 py-2.5 bg-emerald-600 text-white font-bold text-xs uppercase tracking-wider rounded shadow-sm hover:bg-emerald-700 cursor-pointer">Enregistrer</button>
-                                    <button type="button" onclick="disableInlineEdit('${item.id}')" class="px-5 py-2.5 bg-slate-200 text-slate-700 font-bold text-xs uppercase tracking-wider rounded hover:bg-slate-300 cursor-pointer">Annuler</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // Bascule Raccourcis Top 5 (is_trending)
-        async function toggleTrendingState(id, currentState) {
-            const newState = !currentState;
-            try {
-                const { error } = await supabaseClient
-                    .from('dictionary')
-                    .update({ is_trending: newState })
-                    .eq('id', id);
-
-                if (error) throw error;
-
-                const idx = dictionaryData.findIndex(item => item.id === id);
-                if (idx !== -1) dictionaryData[idx].is_trending = newState;
-
-                sortAndRenderAll();
-            } catch (error) {
-                alert("Erreur de favoris Supabase : " + error.message);
-            }
-        }
-
-        function enableInlineEdit(id) {
-            const content = document.getElementById(`content-${id}`);
-            const icon = document.getElementById(`icon-${id}`);
-            if (content) {
-                content.style.maxHeight = "none"; 
-                content.style.opacity = "1";
-                content.classList.remove("overflow-hidden");
-                if (icon) icon.style.transform = 'rotate(180deg)';
-            }
-            document.getElementById(`view-mode-${id}`).classList.add('hidden');
-            document.getElementById(`edit-mode-${id}`).classList.remove('hidden');
-        }
-
-        function disableInlineEdit(id) {
-            document.getElementById(`view-mode-${id}`).classList.remove('hidden');
-            document.getElementById(`edit-mode-${id}`).classList.add('hidden');
-            
-            const content = document.getElementById(`content-${id}`);
-            if (content) {
-                content.classList.add("overflow-hidden");
-                content.style.maxHeight = content.scrollHeight + 'px';
-            }
-        }
-
-        // Sauvegarde de l'édition complète avec le titre du terme
-        async function saveInlineEdit(id) {
-            const term = document.getElementById(`edit-term-${id}`).value.trim();
-            const definition = document.getElementById(`edit-def-${id}`).value.trim();
-            const opportunities = document.getElementById(`edit-opp-${id}`).value.trim();
-            const risks = document.getElementById(`edit-risk-${id}`).value.trim();
-            const management_questions = document.getElementById(`edit-ques-${id}`).value.trim();
-
-            if (!term) {
-                alert("Le titre du mot ne peut pas être vide.");
-                return;
-            }
-
-            try {
-                const { error } = await supabaseClient
-                    .from('dictionary')
-                    .update({ term, definition, opportunities, risks, management_questions })
-                    .eq('id', id);
-
-                if (error) throw error;
-
-                const idx = dictionaryData.findIndex(item => item.id === id);
-                if (idx !== -1) {
-                    dictionaryData[idx].term = term;
-                    dictionaryData[idx].definition = definition;
-                    dictionaryData[idx].opportunities = opportunities;
-                    dictionaryData[idx].risks = risks;
-                    dictionaryData[idx].management_questions = management_questions;
-                }
-
-                sortAndRenderAll();
-                disableInlineEdit(id);
-            } catch (error) {
-                alert("Erreur de modification Supabase : " + error.message);
-            }
-        }
-
-        async function deleteWord(id, termName) {
-            const confirmed = confirm(`Voulez-vous vraiment supprimer le mot "${termName}" ?`);
-            if (!confirmed) return;
-
-            try {
-                const { error } = await supabaseClient.from('dictionary').delete().eq('id', id);
-                if (error) throw error;
-
-                dictionaryData = dictionaryData.filter(item => item.id !== id);
-                sortAndRenderAll();
-            } catch (error) {
-                alert("Erreur lors de la suppression : " + error.message);
-            }
-        }
-
-        function toggleAddForm() {
-            if (!addWordFormContainer) return;
-            if (addWordFormContainer.style.maxHeight && addWordFormContainer.style.maxHeight !== '0px') {
-                addWordFormContainer.style.maxHeight = '0px';
-                addWordFormContainer.style.opacity = '0';
-            } else {
-                addWordFormContainer.style.maxHeight = '1000px';
-                addWordFormContainer.style.opacity = '1';
-                const newTermInput = document.getElementById('new-term');
-                if (newTermInput) newTermInput.focus();
-            }
-        }
-
-        async function createWord() {
-            const term = document.getElementById('new-term').value.trim();
-            const definition = document.getElementById('new-definition').value.trim();
-            const opportunities = document.getElementById('new-opportunities').value.trim();
-            const risks = document.getElementById('new-risks').value.trim();
-            const management_questions = document.getElementById('new-questions').value.trim();
-
-            if (!term || !definition) {
-                alert("Le nom de la notion et la définition factuelle sont obligatoires.");
-                return;
-            }
-
-            try {
-                const { data, error } = await supabaseClient
-                    .from('dictionary')
-                    .insert([{ term, definition, opportunities, risks, management_questions }])
-                    .select();
-
-                if (error) throw error;
-                if (data && data[0]) dictionaryData.push(data[0]);
-                
-                sortAndRenderAll();
-                toggleAddForm(); 
-                
-                document.getElementById('new-term').value = '';
-                document.getElementById('new-definition').value = '';
-                document.getElementById('new-opportunities').value = '';
-                document.getElementById('new-risks').value = '';
-                document.getElementById('new-questions').value = '';
-
-                setTimeout(() => { scrollToAndOpen(term); }, 300);
-            } catch (error) {
-                alert("Erreur lors de l'ajout du terme : " + error.message);
-            }
-        }
-
-        function scrollToAndOpen(exactTermName) {
-            const targetItem = dictionaryData.find(item => 
-                item.term.toLowerCase().includes(exactTermName.toLowerCase()) ||
-                exactTermName.toLowerCase().includes(item.term.toLowerCase())
-            );
-
-            if (targetItem) {
-                const targetElement = document.getElementById(`term-${slugify(targetItem.term)}`);
-                if (targetElement) {
-                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    
-                    const content = document.getElementById(`content-${targetItem.id}`);
-                    const icon = document.getElementById(`icon-${targetItem.id}`);
-                    
-                    if (content && (!content.style.maxHeight || content.style.maxHeight === '0px')) {
-                        document.querySelectorAll('.accordion-content').forEach(el => { el.style.maxHeight = '0px'; el.style.opacity = '0'; });
-                        document.querySelectorAll('.dictionary-item svg').forEach(svg => svg.style.transform = 'rotate(0deg)');
-                        
-                        content.style.maxHeight = '2000px'; 
-                        content.style.opacity = '1';
-                        if (icon) icon.style.transform = 'rotate(180deg)';
-                    }
-                }
-            }
-        }
-
-        function triggerSearch() {
-            if (searchInput) {
-                const query = searchInput.value.trim();
-                if (query) { scrollToAndOpen(query); }
-            }
-        }
-
-        function setupKeyboardEvent() {
-            if (searchInput) {
-                searchInput.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter') { triggerSearch(); }
-                });
-            }
-        }
-
-        function toggleAccordion(contentId, iconId) {
-            const content = document.getElementById(contentId);
-            const icon = document.getElementById(iconId);
-            if (!content || !icon) return;
-            
-            if (content.style.maxHeight && content.style.maxHeight !== '0px') {
-                content.style.maxHeight = '0px';
-                content.style.opacity = '0';
-                icon.style.transform = 'rotate(0deg)';
-            } else {
-                document.querySelectorAll('.accordion-content').forEach(el => { el.style.maxHeight = '0px'; el.style.opacity = '0'; });
-                document.querySelectorAll('.dictionary-item svg').forEach(svg => svg.style.transform = 'rotate(0deg)');
-                content.style.maxHeight = content.scrollHeight + "px";
-                content.style.opacity = '1';
-                icon.style.transform = 'rotate(180deg)';
-            }
-        }
-
-        function slugify(text) {
-            return text.toString().toLowerCase().trim()
-                .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-                .replace(/\s+/g, '-')
-                .replace(/[^\w\-]+/g, '')
-                .replace(/\-\-+/g, '-');
-        }
-    </script>
-</body>
-</html>
+                            <!-- Supprimer -->
+                            <button type="button" onclick="deleteWord('${item.id}', '${item.term.replace(/'/g, "\\'")}')" class="p-1.5 rounded-md hover:bg-stone-50 text-stone-300 hover:text-rose-600 transition-all cursor-pointer" title="Supprimer définitivement">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5Normally I can help with things like this, but I don't seem to have access to that content. You can try again or ask me for something else.
