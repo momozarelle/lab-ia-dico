@@ -60,13 +60,10 @@
                 <svg class="w-3.5 h-3.5 mr-2 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
                 </svg>
-                Les termes les plus recherchés
+                Les termes les plus recherchés (Top 5)
             </h2>
             <div id="trending-container" class="flex flex-wrap gap-2">
-                <button type="button" onclick="scrollToAndOpen('IAG')" class="px-3 py-1.5 text-xs font-bold bg-slate-50 text-slate-700 border border-slate-200 rounded-md hover:bg-cyan-50 hover:border-cyan-200 hover:text-cyan-700 transition-all cursor-pointer">IAG</button>
-                <button type="button" onclick="scrollToAndOpen('Large Language Model')" class="px-3 py-1.5 text-xs font-bold bg-slate-50 text-slate-700 border border-slate-200 rounded-md hover:bg-cyan-50 hover:border-cyan-200 hover:text-cyan-700 transition-all cursor-pointer">Large Language Model</button>
-                <button type="button" onclick="scrollToAndOpen('Prompt')" class="px-3 py-1.5 text-xs font-bold bg-slate-50 text-slate-700 border border-slate-200 rounded-md hover:bg-cyan-50 hover:border-cyan-200 hover:text-cyan-700 transition-all cursor-pointer">Prompt Engineering</button>
-                <button type="button" onclick="scrollToAndOpen('Hallucination')" class="px-3 py-1.5 text-xs font-bold bg-slate-50 text-slate-700 border border-slate-200 rounded-md hover:bg-cyan-50 hover:border-cyan-200 hover:text-cyan-700 transition-all cursor-pointer">Hallucinations</button>
+                <span class="text-xs text-slate-400">Chargement des favoris...</span>
             </div>
         </section>
 
@@ -174,6 +171,7 @@
         const searchInput = document.getElementById('search-input');
         const dictionaryList = document.getElementById('dictionary-list');
         const loadingState = document.getElementById('loading-state');
+        const trendingContainer = document.getElementById('trending-container');
         const addWordFormContainer = document.getElementById('add-word-form-container');
 
         document.addEventListener('DOMContentLoaded', async () => {
@@ -183,26 +181,45 @@
 
         async function fetchDictionaryData() {
             try {
-                const { data, error } = await supabaseClient
-                    .from('dictionary')
-                    .select('*');
-
+                const { data, error } = await supabaseClient.from('dictionary').select('*');
                 if (error) throw error;
-
                 dictionaryData = data || [];
                 
                 if (loadingState) loadingState.classList.add('hidden');
                 if (dictionaryList) dictionaryList.classList.remove('hidden');
                 
-                sortAndRenderDictionary(dictionaryData);
+                sortAndRenderAll();
             } catch (error) {
-                console.error('Erreur Supabase Core API:', error.message);
+                console.error('Erreur initialisation Supabase:', error.message);
             }
         }
 
-        function sortAndRenderDictionary(data) {
-            data.sort((a, b) => a.term.localeCompare(b.term, 'fr', { sensitivity: 'base' }));
-            renderDictionary(data);
+        function sortAndRenderAll() {
+            // Tri global A-Z par ordre alphabétique strict
+            dictionaryData.sort((a, b) => a.term.localeCompare(b.term, 'fr', { sensitivity: 'base' }));
+            
+            renderTrendingHeader();
+            renderDictionary(dictionaryData);
+        }
+
+        // Rendu dynamique du Top 5 en haut selon l'état Supabase is_trending
+        function renderTrendingHeader() {
+            const trendingItems = dictionaryData.filter(item => item.is_trending).slice(0, 5);
+            
+            if (trendingItems.length === 0) {
+                trendingContainer.innerHTML = `<span class="text-xs text-slate-400 font-medium italic">Aucun mot mis en avant. Cliquez sur l'étoile d'un mot ci-dessous pour l'ajouter ici.</span>`;
+                return;
+            }
+
+            trendingContainer.innerHTML = trendingItems.map(item => `
+                <button 
+                    type="button"
+                    onclick="scrollToAndOpen('${item.term.replace(/'/g, "\\'")}')" 
+                    class="px-3 py-1.5 text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200 rounded-md hover:bg-cyan-50 hover:border-cyan-200 hover:text-cyan-700 transition-all cursor-pointer font-adetem"
+                >
+                    ${item.term.split(' (')[0]}
+                </button>
+            `).join('');
         }
 
         function renderDictionary(data) {
@@ -224,24 +241,31 @@
                         <div class="flex items-center space-x-2">
                             <button 
                                 type="button"
+                                onclick="toggleTrendingState('${item.id}', ${item.is_trending})"
+                                class="text-base p-1.5 rounded hover:bg-slate-100 cursor-pointer select-none transition-all"
+                                title="${item.is_trending ? 'Retirer du Top 5' : 'Ajouter au Top 5'}"
+                            >
+                                ${item.is_trending ? '⭐' : '☆'}
+                            </button>
+                            
+                            <button 
+                                type="button"
                                 onclick="enableInlineEdit('${item.id}')" 
-                                class="text-xs font-bold text-cyan-600 bg-cyan-50 px-2.5 py-1.5 rounded hover:bg-cyan-100 transition-all cursor-pointer flex items-center space-x-1"
+                                class="text-xs font-bold text-cyan-600 bg-cyan-50 px-2.5 py-2 rounded hover:bg-cyan-100 transition-all cursor-pointer flex items-center space-x-1"
                             >
                                 <span>🖋️ Modifier</span>
                             </button>
+                            
                             <button 
                                 type="button"
                                 onclick="deleteWord('${item.id}', '${item.term.replace(/'/g, "\\'")}')" 
-                                class="text-xs font-bold text-rose-600 bg-rose-50 px-2.5 py-1.5 rounded hover:bg-rose-100 transition-all cursor-pointer flex items-center space-x-1"
+                                class="text-xs font-bold text-rose-600 bg-rose-50 px-2.5 py-2 rounded hover:bg-rose-100 transition-all cursor-pointer flex items-center space-x-1"
                                 title="Supprimer définitivement"
                             >
                                 <span>🗑️</span>
                             </button>
-                            <button 
-                                type="button"
-                                onclick="toggleAccordion('content-${item.id}', 'icon-${item.id}')"
-                                class="p-1 cursor-pointer"
-                            >
+                            
+                            <button type="button" onclick="toggleAccordion('content-${item.id}', 'icon-${item.id}')" class="p-1 cursor-pointer">
                                 <svg id="icon-${item.id}" class="w-4 h-4 text-slate-400 transform transition-transform duration-300 ease-in-out" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path>
                                 </svg>
@@ -282,6 +306,10 @@
                         <div class="px-6 pb-6 pt-4 space-y-4 text-slate-800 hidden" id="edit-mode-${item.id}">
                             <div class="space-y-4 text-sm">
                                 <div>
+                                    <label class="block font-bold text-slate-700 mb-1">Nom du mot / Notion (Titre)</label>
+                                    <input type="text" id="edit-term-${item.id}" value="${item.term || ''}" class="w-full p-2.5 bg-white border border-slate-200 rounded-md focus:outline-cyan-600 font-bold text-[#002B49]">
+                                </div>
+                                <div>
                                     <label class="block font-bold text-slate-700 mb-1">Définition factuelle</label>
                                     <textarea id="edit-def-${item.id}" rows="3" class="w-full p-2.5 bg-white border border-slate-200 rounded-md focus:outline-cyan-600">${item.definition || ''}</textarea>
                                 </div>
@@ -310,6 +338,26 @@
             `).join('');
         }
 
+        // Bascule Raccourcis Top 5 (is_trending)
+        async function toggleTrendingState(id, currentState) {
+            const newState = !currentState;
+            try {
+                const { error } = await supabaseClient
+                    .from('dictionary')
+                    .update({ is_trending: newState })
+                    .eq('id', id);
+
+                if (error) throw error;
+
+                const idx = dictionaryData.findIndex(item => item.id === id);
+                if (idx !== -1) dictionaryData[idx].is_trending = newState;
+
+                sortAndRenderAll();
+            } catch (error) {
+                alert("Erreur de favoris Supabase : " + error.message);
+            }
+        }
+
         function enableInlineEdit(id) {
             const content = document.getElementById(`content-${id}`);
             const icon = document.getElementById(`icon-${id}`);
@@ -330,33 +378,41 @@
             const content = document.getElementById(`content-${id}`);
             if (content) {
                 content.classList.add("overflow-hidden");
-                content.style.maxHeight = content.scrollHeight + "px";
+                content.style.maxHeight = content.scrollHeight + 'px';
             }
         }
 
+        // Sauvegarde de l'édition complète avec le titre du terme
         async function saveInlineEdit(id) {
+            const term = document.getElementById(`edit-term-${id}`).value.trim();
             const definition = document.getElementById(`edit-def-${id}`).value.trim();
             const opportunities = document.getElementById(`edit-opp-${id}`).value.trim();
             const risks = document.getElementById(`edit-risk-${id}`).value.trim();
             const management_questions = document.getElementById(`edit-ques-${id}`).value.trim();
 
+            if (!term) {
+                alert("Le titre du mot ne peut pas être vide.");
+                return;
+            }
+
             try {
                 const { error } = await supabaseClient
                     .from('dictionary')
-                    .update({ definition, opportunities, risks, management_questions })
+                    .update({ term, definition, opportunities, risks, management_questions })
                     .eq('id', id);
 
                 if (error) throw error;
 
                 const idx = dictionaryData.findIndex(item => item.id === id);
                 if (idx !== -1) {
+                    dictionaryData[idx].term = term;
                     dictionaryData[idx].definition = definition;
                     dictionaryData[idx].opportunities = opportunities;
                     dictionaryData[idx].risks = risks;
                     dictionaryData[idx].management_questions = management_questions;
                 }
 
-                sortAndRenderDictionary(dictionaryData);
+                sortAndRenderAll();
                 disableInlineEdit(id);
             } catch (error) {
                 alert("Erreur de modification Supabase : " + error.message);
@@ -368,15 +424,11 @@
             if (!confirmed) return;
 
             try {
-                const { error } = await supabaseClient
-                    .from('dictionary')
-                    .delete()
-                    .eq('id', id);
-
+                const { error } = await supabaseClient.from('dictionary').delete().eq('id', id);
                 if (error) throw error;
 
                 dictionaryData = dictionaryData.filter(item => item.id !== id);
-                sortAndRenderDictionary(dictionaryData);
+                sortAndRenderAll();
             } catch (error) {
                 alert("Erreur lors de la suppression : " + error.message);
             }
@@ -414,12 +466,9 @@
                     .select();
 
                 if (error) throw error;
-
-                if (data && data[0]) {
-                    dictionaryData.push(data[0]);
-                }
+                if (data && data[0]) dictionaryData.push(data[0]);
                 
-                sortAndRenderDictionary(dictionaryData);
+                sortAndRenderAll();
                 toggleAddForm(); 
                 
                 document.getElementById('new-term').value = '';
@@ -429,7 +478,6 @@
                 document.getElementById('new-questions').value = '';
 
                 setTimeout(() => { scrollToAndOpen(term); }, 300);
-
             } catch (error) {
                 alert("Erreur lors de l'ajout du terme : " + error.message);
             }
@@ -488,7 +536,7 @@
             } else {
                 document.querySelectorAll('.accordion-content').forEach(el => { el.style.maxHeight = '0px'; el.style.opacity = '0'; });
                 document.querySelectorAll('.dictionary-item svg').forEach(svg => svg.style.transform = 'rotate(0deg)');
-                content.style.maxHeight = content.scrollHeight + 'px';
+                content.style.maxHeight = content.scrollHeight + "px";
                 content.style.opacity = '1';
                 icon.style.transform = 'rotate(180deg)';
             }
