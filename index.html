@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Les Mots de l'IA — Le Lab IA ADETEM</title>
-    <!-- Tailwind CSS v4 CDN -->
+    
+    <link rel="icon" type="image/png" href="https://goviudqrftefrnrdamxk.supabase.co/storage/v1/object/public/Visuels%20Lab%20IA/rond.png">
+    
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-    <!-- Supabase JS Client CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <!-- Google Fonts - Typographies Officielles ADETEM -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
@@ -29,7 +29,6 @@
 </head>
 <body class="min-h-screen selection:bg-cyan-500/20 selection:text-cyan-900">
 
-    <!-- Header avec Logo Agrandir (x2) -->
     <header class="border-b border-slate-200 bg-white sticky top-0 z-50 shadow-xs">
         <div class="max-w-4xl mx-auto px-6 h-24 flex items-center justify-between">
             <div class="flex items-center">
@@ -42,10 +41,8 @@
         </div>
     </header>
 
-    <!-- Conteneur Principal -->
     <main class="max-w-4xl mx-auto px-6 py-12 md:py-16">
         
-        <!-- Hero Section -->
         <section class="mb-12 border-b border-slate-200 pb-10">
             <h1 class="text-4xl md:text-5xl font-black tracking-tight text-[#002B49] mb-4 uppercase">
                 Les Mots de l'IA
@@ -55,7 +52,6 @@
             </p>
         </section>
 
-        <!-- Section Top 5 / Les 4 termes les plus recherchés -->
         <section class="mb-10 p-5 rounded-lg bg-white border border-slate-200 shadow-xs">
             <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center">
                 <svg class="w-3.5 h-3.5 mr-2 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -71,7 +67,6 @@
             </div>
         </section>
 
-        <!-- Barre de Recherche Épurée avec Bouton -->
         <section class="mb-8 sticky top-28 z-40">
             <div class="flex items-center gap-2">
                 <div class="relative flex-1 group">
@@ -96,20 +91,16 @@
             </div>
         </section>
 
-        <!-- Liste Principale du Dictionnaire -->
         <section>
-            <!-- Loader d'attente discret -->
             <div id="loading-state" class="py-12 text-center text-slate-500 font-medium">
                 <div class="inline-block animate-spin rounded-full h-5 w-5 border-2 border-slate-300 border-t-cyan-600"></div>
             </div>
 
-            <!-- Conteneur global unique des Mots -->
             <div id="dictionary-list" class="bg-white border border-slate-200 rounded-lg shadow-xs divide-y divide-slate-100 overflow-hidden hidden"></div>
         </section>
 
     </main>
 
-    <!-- Pied de page épuré sans mentions textuelles -->
     <footer class="py-12"></footer>
 
     <script>
@@ -128,17 +119,17 @@
             setupKeyboardEvent();
         });
 
-        // Récupération avec correction des double-quotes sur le nom de colonne Postgres
+        // RÉSOLUTION DU BUG DE CHARGEMENT : Tri ciblé sur la clé exacte sensible à la casse
         async function fetchDictionaryData() {
             try {
                 const { data, error } = await supabase
                     .from('dictionary')
                     .select('*')
-                    .order('Terme', { ascending: true }); // Correction de casse syntaxique ici
+                    .order('Terme', { ascending: true }); 
 
                 if (error) throw error;
 
-                // Filtrage automatique des lignes d'en-tête invalides ou vides du CSV
+                // Conservation et isolation des lignes valides du dictionnaire
                 dictionaryData = (data || []).filter(item => item["Terme"] && item["Définition factuelle"]);
                 
                 loadingState.classList.add('hidden');
@@ -147,17 +138,16 @@
                 renderDictionary(dictionaryData);
 
             } catch (error) {
-                console.error('Erreur Supabase Fetch:', error.message);
-                loadingState.innerHTML = '';
+                console.error('Erreur de chargement Supabase:', error.message);
+                loadingState.innerHTML = `<div class="text-xs text-slate-400 py-4">Erreur d'accès aux données.</div>`;
             }
         }
 
-        // Rendu unitaire de l'ensemble du dictionnaire sur une seule et unique page
+        // Rendu de la liste ordonnée
         function renderDictionary(data) {
             dictionaryList.innerHTML = data.map(item => `
                 <div class="dictionary-item group transition-colors duration-150 hover:bg-slate-50/50" id="term-${slugify(item["Terme"])}">
                     
-                    <!-- Ligne d'entête principale cliquable -->
                     <button 
                         onclick="toggleAccordion('content-${item.id}', 'icon-${item.id}')"
                         class="w-full flex items-center justify-between text-left px-6 py-5 cursor-pointer focus:outline-hidden"
@@ -165,7 +155,6 @@
                         <span class="text-lg font-bold text-[#002B49] group-hover:text-cyan-700 transition-colors tracking-tight font-adetem">
                             ${item["Terme"]}
                         </span>
-                        <!-- Petite flèche de déploiement demandée -->
                         <svg 
                             id="icon-${item.id}"
                             class="w-4 h-4 text-slate-400 transform transition-transform duration-300 ease-in-out group-hover:text-slate-600" 
@@ -177,21 +166,18 @@
                         </svg>
                     </button>
 
-                    <!-- Tiroir des détails et diagnostics -->
                     <div id="content-${item.id}" class="accordion-content max-h-0 overflow-hidden opacity-0 bg-slate-50/30">
                         <div class="px-6 pb-6 pt-1 space-y-4 text-slate-800">
                             
-                            <!-- Définition -->
                             <div class="text-base leading-relaxed text-slate-600 font-normal border-b border-slate-100 pb-4">
                                 ${item["Définition factuelle"]}
                             </div>
                             
-                            <!-- Cadre d'Analyse Métier Lab IA -->
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
                                 ${item["Opportunités (pour un marketeur)"] ? `
                                     <div class="p-4 bg-white border border-slate-200 rounded-md shadow-2xs">
                                         <div class="text-xs font-bold text-emerald-700 uppercase tracking-wider mb-1 flex items-center">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span> Opportunités Métier
+                                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span> Enjeux & Opportunités
                                         </div>
                                         <p class="text-xs text-slate-600 leading-relaxed">${item["Opportunités (pour un marketeur)"]}</p>
                                     </div>
@@ -200,14 +186,13 @@
                                 ${item["Risques (pour un marketeur)"] ? `
                                     <div class="p-4 bg-white border border-slate-200 rounded-md shadow-2xs">
                                         <div class="text-xs font-bold text-rose-700 uppercase tracking-wider mb-1 flex items-center">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-rose-500 mr-1.5"></span> Risques & Vigilance
+                                            <span class="w-1.5 h-1.5 rounded-full bg-rose-500 mr-1.5"></span> Facteurs de Risque
                                         </div>
                                         <p class="text-xs text-slate-600 leading-relaxed">${item["Risques (pour un marketeur)"]}</p>
                                     </div>
                                 ` : ''}
                             </div>
 
-                            <!-- Question de pilotage -->
                             ${item["Question de pilotage"] ? `
                                 <div class="p-4 bg-[#002B49] text-white rounded-md shadow-xs mt-2">
                                     <div class="text-[10px] font-bold uppercase tracking-widest text-cyan-300 mb-1">
@@ -223,9 +208,7 @@
             `).join('');
         }
 
-        // Mécanique de ciblage : Descend sur la page et déploie le terme demandé
         function scrollToAndOpen(exactTermName) {
-            // Recherche de l'élément le plus proche de la chaîne saisie ou cliquée
             const targetItem = dictionaryData.find(item => 
                 item["Terme"].toLowerCase().includes(exactTermName.toLowerCase()) ||
                 exactTermName.toLowerCase().includes(item["Terme"].toLowerCase())
@@ -234,19 +217,15 @@
             if (targetItem) {
                 const targetElement = document.getElementById(`term-${slugify(targetItem["Terme"])}`);
                 if (targetElement) {
-                    // 1. Descend proprement à l'endroit exact de la page unique
                     targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     
-                    // 2. Déploie l'accordéon s'il n'est pas déjà ouvert
                     const content = document.getElementById(`content-${targetItem.id}`);
                     const icon = document.getElementById(`icon-${targetItem.id}`);
                     
                     if (content && (!content.style.maxHeight || content.style.maxHeight === '0px')) {
-                        // Fermeture des autres tiroirs pour préserver l'élégance
                         document.querySelectorAll('.accordion-content').forEach(el => { el.style.maxHeight = '0px'; el.style.opacity = '0'; });
                         document.querySelectorAll('.dictionary-item svg').forEach(svg => svg.style.transform = 'rotate(0deg)');
                         
-                        // Déploiement de la cible
                         content.style.maxHeight = content.scrollHeight + 'px';
                         content.style.opacity = '1';
                         icon.style.transform = 'rotate(180deg)';
@@ -255,7 +234,6 @@
             }
         }
 
-        // Déclencheur du bouton Rechercher
         function triggerSearch() {
             const query = searchInput.value.trim();
             if (query) {
@@ -289,6 +267,7 @@
 
         function slugify(text) {
             return text.toString().toLowerCase().trim()
+                .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // Nettoyage robuste des accents pour le ciblage d'ID HTML
                 .replace(/\s+/g, '-')
                 .replace(/[^\w\-]+/g, '')
                 .replace(/\-\-+/g, '-');
