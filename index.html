@@ -3,11 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Les Mots de l'IA — Le Lab IA ADETEM</title>
+    <title>Les Mots de l'IA — Espace de Co-construction</title>
     
+    <!-- Favicon Officiel (Petit rond bleu) -->
     <link rel="icon" type="image/png" href="https://goviudqrftefrnrdamxk.supabase.co/storage/v1/object/public/Visuels%20Lab%20IA/rond.png">
     
+    <!-- Tailwind CSS v4 CDN -->
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <!-- Supabase JS Client CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Google Fonts - Typographies Officielles ADETEM -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
@@ -28,6 +33,7 @@
 </head>
 <body class="min-h-screen selection:bg-cyan-500/20 selection:text-cyan-900">
 
+    <!-- Header avec Logo Grand Format -->
     <header class="border-b border-slate-200 bg-white sticky top-0 z-50 shadow-xs">
         <div class="max-w-4xl mx-auto px-6 h-24 flex items-center justify-between">
             <div class="flex items-center">
@@ -37,20 +43,26 @@
                     class="h-24 w-auto object-contain"
                 />
             </div>
+            <div class="bg-amber-50 text-amber-800 border border-amber-200 text-[11px] font-bold px-3 py-1 rounded-md uppercase tracking-wider">
+                Espace Éditeur Actif
+            </div>
         </div>
     </header>
 
+    <!-- Conteneur Principal -->
     <main class="max-w-4xl mx-auto px-6 py-12 md:py-16">
         
+        <!-- Hero Section -->
         <section class="mb-12 border-b border-slate-200 pb-10">
             <h1 class="text-4xl md:text-5xl font-black tracking-tight text-[#002B49] mb-4 uppercase">
                 Les Mots de l'IA
             </h1>
             <p class="text-slate-600 text-base md:text-lg font-normal max-w-2xl leading-relaxed">
-                Le glossaire interactif du marketing augmenté. Conçu pour guider les professionnels du marketing vers une industrialisation responsable, maîtrisée et durable.
+                Le glossaire interactif du marketing augmenté. Version collaborative interne connectée en temps réel à la base Supabase.
             </p>
         </section>
 
+        <!-- Section Top 5 Raccourcis -->
         <section class="mb-10 p-5 rounded-lg bg-white border border-slate-200 shadow-xs">
             <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center">
                 <svg class="w-3.5 h-3.5 mr-2 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -66,6 +78,7 @@
             </div>
         </section>
 
+        <!-- Barre de Recherche Universelle -->
         <section class="mb-8 sticky top-28 z-40">
             <div class="flex items-center gap-2">
                 <div class="relative flex-1 group">
@@ -90,146 +103,149 @@
             </div>
         </section>
 
-        <section>
-            <div id="dictionary-list" class="bg-white border border-slate-200 rounded-lg shadow-xs divide-y divide-slate-100 overflow-hidden"></div>
+        <!-- Liste Principale du Dictionnaire -->
+        <section class="mb-10">
+            <!-- Loader d'attente discret -->
+            <div id="loading-state" class="py-12 text-center text-slate-500 font-medium">
+                <div class="inline-block animate-spin rounded-full h-5 w-5 border-2 border-slate-300 border-t-cyan-600"></div>
+            </div>
+
+            <!-- Conteneur de rendu unique -->
+            <div id="dictionary-list" class="bg-white border border-slate-200 rounded-lg shadow-xs divide-y divide-slate-100 overflow-hidden hidden"></div>
+        </section>
+
+        <!-- Section Action de Création -->
+        <section class="bg-white border border-slate-200 rounded-lg p-6 shadow-xs">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="font-bold text-lg text-[#002B49] uppercase tracking-tight">Ajouter une nouvelle notion</h3>
+            </div>
+            <div class="grid grid-cols-1 gap-4 text-sm">
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">Nom du mot / Notion</label>
+                    <input type="text" id="new-term" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md focus:outline-cyan-600" placeholder="Ex: Multimodalité">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">Définition factuelle</label>
+                    <textarea id="new-definition" rows="3" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md focus:outline-cyan-600" placeholder="Saisir la description technique..."></textarea>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Enjeux & Opportunités</label>
+                        <textarea id="new-opportunities" rows="3" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md focus:outline-cyan-600" placeholder="Pour un marketeur..."></textarea>
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Facteurs de Risque</label>
+                        <textarea id="new-risks" rows="3" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md focus:outline-cyan-600" placeholder="Points de vigilance stratégiques..."></textarea>
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">Question de pilotage managérial</label>
+                    <input type="text" id="new-questions" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md focus:outline-cyan-600" placeholder="La question clé à se poser...">
+                </div>
+                <div class="pt-2">
+                    <button 
+                        onclick="createWord()" 
+                        class="w-full md:w-auto px-6 py-3 bg-emerald-600 text-white font-bold uppercase tracking-wider rounded-md hover:bg-emerald-700 shadow-sm transition-all cursor-pointer"
+                    >
+                        Valider et Enregistrer
+                    </button>
+                </div>
+            </div>
         </section>
 
     </main>
 
     <footer class="py-12"></footer>
 
+    <!-- Logique Applicative Unifiée -->
     <script>
-        const dictionaryData = [
-            {
-                id: "1",
-                term: "IAG (Intelligence Artificielle Générative)",
-                definition: "IA capable de générer de nouveaux contenus (texte, image, audio, vidéo, code) à partir d’instructions et d’exemples.",
-                opportunities: "Accélérer la production de brouillons (angles, variantes, plans, scripts) et industrialiser des déclinaisons (ads, emails, landing pages). Tester plus vite des hypothèses de messages et de formats.",
-                risks: "Contenus plausibles et faux, ou contenus “sans style” qui affaiblissent la marque. Risque de confidentialité si on colle des données sensibles dans l’outil.",
-                management_questions: "Quelles tâches on autorise, quelles tâches on interdit, et quel circuit de validation on impose avant diffusion ?"
-            },
-            {
-                id: "2",
-                term: "Large Language Model (LLM)",
-                definition: "Modèle entraîné sur de grands corpus de textes pour comprendre et générer du langage naturel. Il prédit la suite la plus probable d’un texte selon le contexte.",
-                opportunities: "Servir de “moteur” pour assistant interne, aide à la rédaction, synthèse, classification, FAQ, support. Faciliter l’analyse de verbatims et la production de versions adaptées à des cibles.",
-                risks: "Peut produire des réponses convaincantes sans preuve. Sensible au contexte, aux instructions, aux biais présents dans les données ou dans la consigne.",
-                management_questions: "Quel niveau de fiabilité exige-t-on selon l’usage (brouillon interne, publication, support client), et comment le mesure-t-on ?"
-            },
-            {
-                id: "3",
-                term: "Prompt engenering / context engenering",
-                definition: "Instruction donnée à l’IA pour orienter la sortie (objectif, contexte, contraintes, format, exemples).",
-                opportunities: "Standardiser la qualité: mêmes consignes, mêmes formats, mêmes critères, donc production plus régulière. Transférer une méthode à une équipe (briefs réutilisables).",
-                risks: "Prompt mal conçu = sortie trompeuse, hors-sujet, ton inadapté, risque de non-conformité. Fuite d’informations si on met des éléments confidentiels dans le prompt.",
-                management_questions: "Quels éléments sont obligatoires dans nos prompts (objectif, audience, sources, ton, interdits) et lesquels sont interdits (données sensibles, infos clients) ?"
-            },
-            {
-                id: "4",
-                term: "Hallucination",
-                definition: "Erreur où l’IA invente une information non vérifiable ou fausse en la présentant comme vraie.",
-                opportunities: "Très utile pour explorer des pistes (angles, structures, formulations) tant que c’est traité comme un brouillon. Peut aider à repérer des zones à documenter en listant ce qu’il “faudrait vérifier”.",
-                risks: "Risque de publier des erreurs factuelles, juridiques, produit, ou de déformer une source. Risque de décrédibiliser la marque et l’expertise.",
-                management_questions: "Qu’est-ce qui doit obligatoirement être sourcé, et qui valide factuellement avant publication ou envoi client ?"
-            },
-            {
-                id: "5",
-                term: "RAG (Retrieval-Augmented Generation)",
-                definition: "Technique où l’IA récupère des informations dans une base documentaire (pages, PDF, FAQ, contrats, etc.) puis génère une réponse en s’appuyant sur ces contenus.",
-                opportunities: "Créer un assistant marketing “branché” sur les docs (offres, pitch, cas clients, guidelines), donc réponses plus alignées. Réduire les inventions en forçant l’ancrage sur des sources.",
-                risks: "Si la base est mauvaise, obsolète, non gouvernée, l’IA devient très sûre d’elle sur de mauvaises infos. Risque d’exposer des documents à des personnes non autorisées si la gouvernance est floue.",
-                management_questions: "Quelle est la “source de vérité”, qui la maintient à jour, et quelles règles d’accès s’applquent aux documents utilisés ?"
-            },
-            {
-                id: "6",
-                term: "Fine-tuning / Affinage",
-                definition: "Ajustement d’un modèle existant sur des données ciblées pour modifier son comportement (style, règles, tâches, vocabulaire) ou ses performances sur un domaine.",
-                opportunities: "Obtenir une IA plus cohérente avec le vocabulaire produit, les règles de marque, les catégories internes. Réduire l’effort de prompting pour des tâches répétitives.",
-                risks: "Coûteux, difficile à maintenir, risque d’“apprendre” des erreurs si les données sont mauvaises. Risque juridique et confidentialité sur les données utilisées pour l’affinage.",
-                management_questions: "Qu’est-ce qui justeifie un affinage plutôt qu’un bon prompt + une base RAG + des règles de validation ?"
-            },
-            {
-                id: "7",
-                term: "IA Act",
-                definition: "Cadre réglementaire européen qui encadre certains usages de l’IA selon le niveau de risque, avec des obligations possibles (transparence, gouvernance, documentation, contrôle).",
-                opportunities: "Donner un langage commun avec juridique, compliance, achats, DSI pour cadrer les fournisseurs et les usages. Anticiper les exigences des clients grands comptes.",
-                risks: "Non-conformité, risques contractuels, risques d’image si usage perçu comme opaque ou irresponsable. Frein projet si on découvre les obligations trop tard.",
-                management_questions: "Notre usage est-il concerné, et quelles preuves devons-nous exiger d’un fournisseur (documentation, transparence, contrôle) ?"
-            },
-            {
-                id: "8",
-                term: "RGPD (Règlement Général sur la Protection des Données)",
-                definition: "Réglementation européenne sur la protection des données personnelles, qui encadre la collecte, le traitement, la conservation, la sécurité, et les droits des personnes.",
-                opportunities: "Cadrer proprement CRM, segmentation, personalization, scoring, automatisations, en évitant les bricolages. Renforcer la confiance client via des pratiques claires.",
-                risks: "Risque de mettre des données personnelles dans des outils IA non maîtrisés. Risques juridiques, réputationnels, et opérationnels (effacement, accès, violation de données).",
-                management_questions: "Quelles données personnelles peuvent entrer dans un outil IA, dans quels outils, avec quels réglages, et avec quelle base légale ?"
-            },
-            {
-                id: "9",
-                term: "GEO (Generative Engine Optimization)",
-                definition: "Ensemble de pratiques visant à rendre un contenu facilement compréhensible et réutilisable par des moteurs et assistants génératifs pour être cité ou recommandé.",
-                opportunities: "Structurer les contenus pour être repris dans des réponses d’IA (définitions, preuves, sources, FAQ, comparatifs). Améliorer la découvrabilité au-delà du SEO classique.",
-                risks: "Risque de produire du contenu “optimisé IA” sans valeur, donc perte de crédibilité. Risque de dépendance à des plateformes dont les règles bougent.",
-                management_questions: "Quelles pages sont stratégiques à “rendre citables”, et quelles preuves/sources met-on pour mériter la citation ?"
-            },
-            {
-                id: "10",
-                term: "Agent IA",
-                definition: "Logiciel qui planifie et exécute des tâches en plusieurs étapes, parfois en utilisant des outils (emails, calendrier, CRM, navigateur), avec un objectif donné.",
-                opportunities: "Automatiser des chaînes de tâches (veille -> tri -> synthèse -> brief -> diffusion interne). Accélérer l’exécution de tâches marketing répétitives avec un cadre.",
-                risks: "Risque d’actions non souhaitées si l’agent a trop de permissions. Risque de pertes de données, d’erreurs de publication, ou d’envoi au mauvais destinataire.",
-                management_questions: "Quelles permissions minimales on donne à l’agent, quelles actions nécessitent validation humaine, et comment on trace ce qui a été fait ?"
-            }
-        ];
+        const SUPABASE_URL = 'https://goviudqrftefrnrdamxk.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdvdml1ZHFyZnRlZnJucmRhbXhrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI5MTYxOTYsImV4cCI6MjA5ODQ5MjE5Nn0.BnjHGjgCD3uVch5kT2FyRiGXzAVM9k6rMpq4p2Hhci4';
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const dictionaryList = document.getElementById('dictionary-list');
-            if (dictionaryList) {
-                renderDictionary(dictionaryData);
-            }
+        // Initialisation globale unique du client SDK Supabase
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        let dictionaryData = [];
+
+        const searchInput = document.getElementById('search-input');
+        const dictionaryList = document.getElementById('dictionary-list');
+        const loadingState = document.getElementById('loading-state');
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            await fetchDictionaryData();
             setupKeyboardEvent();
         });
 
-        function renderDictionary(data) {
-            const dictionaryList = document.getElementById('dictionary-list');
-            if (!dictionaryList) return;
-            
-            dictionaryList.innerHTML = data.map(item => `
-                <div class="dictionary-item group transition-colors duration-150 hover:bg-slate-50/50" id="term-${slugify(item.term)}">
-                    <button 
-                        onclick="toggleAccordion('content-${item.id}', 'icon-${item.id}')"
-                        class="w-full flex items-center justify-between text-left px-6 py-5 cursor-pointer focus:outline-hidden"
-                    >
-                        <span class="text-lg font-bold text-[#002B49] group-hover:text-cyan-700 transition-colors tracking-tight font-adetem">
-                            ${item.term}
-                        </span>
-                        <svg id="icon-${item.id}" class="w-4 h-4 text-slate-400 transform transition-transform duration-300 ease-in-out group-hover:text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path>
-                        </svg>
-                    </button>
+        async function fetchDictionaryData() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('dictionary')
+                    .select('*')
+                    .order('term', { ascending: true }); // Tri A-Z natif Postgres
 
+                if (error) throw error;
+
+                dictionaryData = data || [];
+                
+                loadingState.classList.add('hidden');
+                dictionaryList.classList.remove('hidden');
+                
+                renderDictionary(dictionaryData);
+            } catch (error) {
+                console.error('Erreur Supabase Core API:', error.message);
+            }
+        }
+
+        function renderDictionary(data) {
+            // Classement JS sécurité par ordre alphabétique
+            data.sort((a, b) => a.term.localeCompare(b.term));
+
+            dictionaryList.innerHTML = data.map(item => `
+                <div class="dictionary-item group transition-colors duration-150 bg-white" id="term-${slugify(item.term)}">
+                    
+                    <!-- Entête Notion -->
+                    <div class="w-full flex items-center justify-between px-6 py-5 border-b border-slate-100 bg-white">
+                        <button 
+                            onclick="toggleAccordion('content-${item.id}', 'icon-${item.id}')"
+                            class="flex-1 text-left cursor-pointer focus:outline-hidden"
+                        >
+                            <span class="text-lg font-bold text-[#002B49] group-hover:text-cyan-700 transition-colors tracking-tight font-adetem">
+                                ${item.term}
+                            </span>
+                        </button>
+                        <div class="flex items-center space-x-3">
+                            <button 
+                                onclick="enableInlineEdit('${item.id}')" 
+                                class="text-xs font-bold text-cyan-600 bg-cyan-50 px-2.5 py-1 rounded hover:bg-cyan-100 transition-all cursor-pointer flex items-center space-x-1"
+                            >
+                                <span>🖋️ Modifier</span>
+                            </button>
+                            <svg id="icon-${item.id}" class="w-4 h-4 text-slate-400 transform transition-transform duration-300 ease-in-out" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Tiroir Accordéon Dépliable -->
                     <div id="content-${item.id}" class="accordion-content max-h-0 overflow-hidden opacity-0 bg-slate-50/30">
-                        <div class="px-6 pb-6 pt-1 space-y-4 text-slate-800">
+                        <div class="px-6 pb-6 pt-4 space-y-4 text-slate-800" id="view-mode-${item.id}">
+                            
+                            <!-- Mode Lecture (Par défaut) -->
                             <div class="text-base leading-relaxed text-slate-600 font-normal border-b border-slate-100 pb-4">
-                                ${item.definition}
+                                ${item.definition || '<em class="text-slate-400">Aucune définition renseignée.</em>'}
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
-                                ${item.opportunities ? `
-                                    <div class="p-4 bg-white border border-slate-200 rounded-md shadow-2xs">
-                                        <div class="text-xs font-bold text-emerald-700 uppercase tracking-wider mb-1 flex items-center">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span> Enjeux & Opportunités
-                                        </div>
-                                        <p class="text-xs text-slate-600 leading-relaxed">${item.opportunities}</p>
+                                <div class="p-4 bg-white border border-slate-200 rounded-md shadow-2xs">
+                                    <div class="text-xs font-bold text-emerald-700 uppercase tracking-wider mb-1 flex items-center">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span> Enjeux & Opportunités
                                     </div>
-                                ` : ''}
-                                ${item.risks ? `
-                                    <div class="p-4 bg-white border border-slate-200 rounded-md shadow-2xs">
-                                        <div class="text-xs font-bold text-rose-700 uppercase tracking-wider mb-1 flex items-center">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-rose-500 mr-1.5"></span> Facteurs de Risque
-                                        </div>
-                                        <p class="text-xs text-slate-600 leading-relaxed">${item.risks}</p>
+                                    <p class="text-xs text-slate-600 leading-relaxed">${item.opportunities || 'N/A'}</p>
+                                </div>
+                                <div class="p-4 bg-white border border-slate-200 rounded-md shadow-2xs">
+                                    <div class="text-xs font-bold text-rose-700 uppercase tracking-wider mb-1 flex items-center">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-rose-500 mr-1.5"></span> Facteurs de Risque
                                     </div>
-                                ` : ''}
+                                    <p class="text-xs text-slate-600 leading-relaxed">${item.risks || 'N/A'}</p>
+                                </div>
                             </div>
                             ${item.management_questions ? `
                                 <div class="p-4 bg-[#002B49] text-white rounded-md shadow-xs mt-2">
@@ -240,12 +256,135 @@
                                 </div>
                             ` : ''}
                         </div>
+
+                        <!-- Mode Édition en ligne (Masqué par défaut) -->
+                        <div class="px-6 pb-6 pt-4 space-y-4 text-slate-800 hidden" id="edit-mode-${item.id}">
+                            <div class="space-y-3 text-sm">
+                                <div>
+                                    <label class="block font-bold text-slate-700 mb-1">Définition factuelle</label>
+                                    <textarea id="edit-def-${item.id}" rows="3" class="w-full p-2 bg-white border border-slate-300 rounded-md focus:outline-cyan-600">${item.definition || ''}</textarea>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block font-bold text-slate-700 mb-1">Enjeux & Opportunités</label>
+                                        <textarea id="edit-opp-${item.id}" rows="3" class="w-full p-2 bg-white border border-slate-300 rounded-md focus:outline-cyan-600">${item.opportunities || ''}</textarea>
+                                    </div>
+                                    <div>
+                                        <label class="block font-bold text-slate-700 mb-1">Facteurs de Risque</label>
+                                        <textarea id="edit-risk-${item.id}" rows="3" class="w-full p-2 bg-white border border-slate-300 rounded-md focus:outline-cyan-600">${item.risks || ''}</textarea>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block font-bold text-slate-700 mb-1">Question de pilotage managérial</label>
+                                    <input type="text" id="edit-ques-${item.id}" value="${item.management_questions || ''}" class="w-full p-2 bg-white border border-slate-300 rounded-md focus:outline-cyan-600">
+                                </div>
+                                <div class="flex items-center space-x-2 pt-2">
+                                    <button onclick="saveInlineEdit('${item.id}')" class="px-4 py-2 bg-emerald-600 text-white font-bold text-xs uppercase tracking-wider rounded shadow-sm hover:bg-emerald-700 cursor-pointer">Enregistrer</button>
+                                    <button onclick="disableInlineEdit('${item.id}')" class="px-4 py-2 bg-slate-200 text-slate-700 font-bold text-xs uppercase tracking-wider rounded hover:bg-slate-300 cursor-pointer">Annuler</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             `).join('');
         }
 
-        // FIX SÉCURISÉ : Recherche et scroll ciblé
+        // Passage au formulaire d'édition
+        function enableInlineEdit(id) {
+            // Déployer le tiroir d'abord
+            const content = document.getElementById(`content-${id}`);
+            const icon = document.getElementById(`icon-${id}`);
+            if (content && content.style.maxHeight === '0px' || !content.style.maxHeight) {
+                content.style.maxHeight = '2000px'; // Donne assez d'amplitude pour les inputs
+                content.style.opacity = '1';
+                if(icon) icon.style.transform = 'rotate(180deg)';
+            }
+            document.getElementById(`view-mode-${id}`).classList.add('hidden');
+            document.getElementById(`edit-mode-${id}`).classList.remove('hidden');
+        }
+
+        function disableInlineEdit(id) {
+            document.getElementById(`view-mode-${id}`).classList.remove('hidden');
+            document.getElementById(`edit-mode-${id}`).classList.add('hidden');
+            // Recalculer l'amplitude de fermeture
+            const content = document.getElementById(`content-${id}`);
+            if (content) content.style.maxHeight = content.scrollHeight + 'px';
+        }
+
+        // Sauvegarde de l'édition en ligne
+        async function saveInlineEdit(id) {
+            const definition = document.getElementById(`edit-def-${id}`).value.trim();
+            const opportunities = document.getElementById(`edit-opp-${id}`).value.trim();
+            const risks = document.getElementById(`edit-risk-${id}`).value.trim();
+            const management_questions = document.getElementById(`edit-ques-${id}`).value.trim();
+
+            try {
+                const { error } = await supabaseClient
+                    .from('dictionary')
+                    .update({ definition, opportunities, risks, management_questions })
+                    .eq('id', id);
+
+                if (error) throw error;
+
+                // Sync locale
+                const idx = dictionaryData.findIndex(item => item.id === id);
+                if (idx !== -1) {
+                    dictionaryData[idx].definition = definition;
+                    dictionaryData[idx].opportunities = opportunities;
+                    dictionaryData[idx].risks = risks;
+                    dictionaryData[idx].management_questions = management_questions;
+                }
+
+                renderDictionary(dictionaryData);
+                disableInlineEdit(id);
+            } catch (error) {
+                alert("Erreur de modification Supabase : " + error.message);
+            }
+        }
+
+        // Création de A à Z d'un nouveau mot
+        async function createWord() {
+            const term = document.getElementById('new-term').value.trim();
+            const definition = document.getElementById('new-definition').value.trim();
+            const opportunities = document.getElementById('new-opportunities').value.trim();
+            const risks = document.getElementById('new-risks').value.trim();
+            const management_questions = document.getElementById('new-questions').value.trim();
+
+            if (!term || !definition) {
+                alert("Le nom de la notion et la définition factuelle sont obligatoires.");
+                return;
+            }
+
+            try {
+                const { data, error } = await supabaseClient
+                    .from('dictionary')
+                    .insert([{ term, definition, opportunities, risks, management_questions }])
+                    .select();
+
+                if (error) throw error;
+
+                // Ajout local & Re-classement A-Z automatique
+                if (data && data[0]) {
+                    dictionaryData.push(data[0]);
+                }
+                
+                renderDictionary(dictionaryData);
+                
+                // Vider les inputs du formulaire d'ajout
+                document.getElementById('new-term').value = '';
+                document.getElementById('new-definition').value = '';
+                document.getElementById('new-opportunities').value = '';
+                document.getElementById('new-risks').value = '';
+                document.getElementById('new-questions').value = '';
+
+                // Scroll vers le mot créé pour confirmation visuelle
+                setTimeout(() => { scrollToAndOpen(term); }, 200);
+
+            } catch (error) {
+                alert("Erreur lors de l'ajout du terme : " + error.message);
+            }
+        }
+
         function scrollToAndOpen(exactTermName) {
             const targetItem = dictionaryData.find(item => 
                 item.term.toLowerCase().includes(exactTermName.toLowerCase()) ||
@@ -256,31 +395,28 @@
                 const targetElement = document.getElementById(`term-${slugify(targetItem.term)}`);
                 if (targetElement) {
                     targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    
                     const content = document.getElementById(`content-${targetItem.id}`);
                     const icon = document.getElementById(`icon-${targetItem.id}`);
+                    
                     if (content && (!content.style.maxHeight || content.style.maxHeight === '0px')) {
                         document.querySelectorAll('.accordion-content').forEach(el => { el.style.maxHeight = '0px'; el.style.opacity = '0'; });
                         document.querySelectorAll('.dictionary-item svg').forEach(svg => svg.style.transform = 'rotate(0deg)');
-                        content.style.maxHeight = content.scrollHeight + 'px';
+                        
+                        content.style.maxHeight = '2000px'; // Capacité d'amplitude étendue
                         content.style.opacity = '1';
-                        icon.style.transform = 'rotate(180deg)';
+                        if (icon) icon.style.transform = 'rotate(180deg)';
                     }
                 }
             }
         }
 
         function triggerSearch() {
-            const searchInput = document.getElementById('search-input');
-            if (searchInput) {
-                const query = searchInput.value.trim();
-                if (query) {
-                    scrollToAndOpen(query);
-                }
-            }
+            const query = searchInput.value.trim();
+            if (query) { scrollToAndOpen(query); }
         }
 
         function setupKeyboardEvent() {
-            const searchInput = document.getElementById('search-input');
             if (searchInput) {
                 searchInput.addEventListener('keydown', (e) => {
                     if (e.key === 'Enter') { triggerSearch(); }
@@ -288,12 +424,10 @@
             }
         }
 
-        // Gestion unitaire des panneaux tiroirs accordéons
         function toggleAccordion(contentId, iconId) {
             const content = document.getElementById(contentId);
             const icon = document.getElementById(iconId);
             if (!content || !icon) return;
-            
             if (content.style.maxHeight && content.style.maxHeight !== '0px') {
                 content.style.maxHeight = '0px';
                 content.style.opacity = '0';
