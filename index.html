@@ -8,7 +8,6 @@
     <link rel="icon" type="image/png" href="https://goviudqrftefrnrdamxk.supabase.co/storage/v1/object/public/Visuels%20Lab%20IA/rond.png">
     
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
@@ -60,9 +59,9 @@
                 Les termes les plus recherchés
             </h2>
             <div id="trending-container" class="flex flex-wrap gap-2">
-                <button onclick="scrollToAndOpen('IAG (Intelligence Artificielle Générative)')" class="px-3 py-1.5 text-xs font-bold bg-slate-50 text-slate-700 border border-slate-200 rounded-md hover:bg-cyan-50 hover:border-cyan-200 hover:text-cyan-700 transition-all cursor-pointer">IAG</button>
-                <button onclick="scrollToAndOpen('Large Language Model (LLM)')" class="px-3 py-1.5 text-xs font-bold bg-slate-50 text-slate-700 border border-slate-200 rounded-md hover:bg-cyan-50 hover:border-cyan-200 hover:text-cyan-700 transition-all cursor-pointer">Large Language Model</button>
-                <button onclick="scrollToAndOpen('Prompt engenering / context engenering')" class="px-3 py-1.5 text-xs font-bold bg-slate-50 text-slate-700 border border-slate-200 rounded-md hover:bg-cyan-50 hover:border-cyan-200 hover:text-cyan-700 transition-all cursor-pointer">Prompt Engineering</button>
+                <button onclick="scrollToAndOpen('IAG')" class="px-3 py-1.5 text-xs font-bold bg-slate-50 text-slate-700 border border-slate-200 rounded-md hover:bg-cyan-50 hover:border-cyan-200 hover:text-cyan-700 transition-all cursor-pointer">IAG</button>
+                <button onclick="scrollToAndOpen('Large Language Model')" class="px-3 py-1.5 text-xs font-bold bg-slate-50 text-slate-700 border border-slate-200 rounded-md hover:bg-cyan-50 hover:border-cyan-200 hover:text-cyan-700 transition-all cursor-pointer">Large Language Model</button>
+                <button onclick="scrollToAndOpen('Prompt')" class="px-3 py-1.5 text-xs font-bold bg-slate-50 text-slate-700 border border-slate-200 rounded-md hover:bg-cyan-50 hover:border-cyan-200 hover:text-cyan-700 transition-all cursor-pointer">Prompt Engineering</button>
                 <button onclick="scrollToAndOpen('Hallucination')" class="px-3 py-1.5 text-xs font-bold bg-slate-50 text-slate-700 border border-slate-200 rounded-md hover:bg-cyan-50 hover:border-cyan-200 hover:text-cyan-700 transition-all cursor-pointer">Hallucinations</button>
             </div>
         </section>
@@ -92,11 +91,7 @@
         </section>
 
         <section>
-            <div id="loading-state" class="py-12 text-center text-slate-500 font-medium">
-                <div class="inline-block animate-spin rounded-full h-5 w-5 border-2 border-slate-300 border-t-cyan-600"></div>
-            </div>
-
-            <div id="dictionary-list" class="bg-white border border-slate-200 rounded-lg shadow-xs divide-y divide-slate-100 overflow-hidden hidden"></div>
+            <div id="dictionary-list" class="bg-white border border-slate-200 rounded-lg shadow-xs divide-y divide-slate-100 overflow-hidden"></div>
         </section>
 
     </main>
@@ -104,49 +99,103 @@
     <footer class="py-12"></footer>
 
     <script>
-        const SUPABASE_URL = 'https://goviudqrftefrnrdamxk.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdvdml1ZHFyZnRlZnJucmRhbXhrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI5MTYxOTYsImV4cCI6MjA5ODQ5MjE5Nn0.BnjHGjgCD3uVch5kT2FyRiGXzAVM9k6rMpq4p2Hhci4';
+        const dictionaryData = [
+            {
+                id: "1",
+                term: "IAG (Intelligence Artificielle Générative)",
+                definition: "IA capable de générer de nouveaux contenus (texte, image, audio, vidéo, code) à partir d’instructions et d’exemples.",
+                opportunities: "Accélérer la production de brouillons (angles, variantes, plans, scripts) et industrialiser des déclinaisons (ads, emails, landing pages). Tester plus vite des hypothèses de messages et de formats.",
+                risks: "Contenus plausibles et faux, ou contenus “sans style” qui affaiblissent la marque. Risque de confidentialité si on colle des données sensibles dans l’outil.",
+                management_questions: "Quelles tâches on autorise, quelles tâches on interdit, et quel circuit de validation on impose avant diffusion ?"
+            },
+            {
+                id: "2",
+                term: "Large Language Model (LLM)",
+                definition: "Modèle entraîné sur de grands corpus de textes pour comprendre et générer du langage naturel. Il prédit la suite la plus probable d’un texte selon le contexte.",
+                opportunities: "Servir de “moteur” pour assistant interne, aide à la rédaction, synthèse, classification, FAQ, support. Faciliter l’analyse de verbatims et la production de versions adaptées à des cibles.",
+                risks: "Peut produire des réponses convaincantes sans preuve. Sensible au contexte, aux instructions, aux biais présents dans les données ou dans la consigne.",
+                management_questions: "Quel niveau de fiabilité exige-t-on selon l’usage (brouillon interne, publication, support client), et comment le mesure-t-on ?"
+            },
+            {
+                id: "3",
+                term: "Prompt engenering / context engenering",
+                definition: "Instruction donnée à l’IA pour orienter la sortie (objectif, contexte, contraintes, format, exemples).",
+                opportunities: "Standardiser la qualité: mêmes consignes, mêmes formats, mêmes critères, donc production plus régulière. Transférer une méthode à une équipe (briefs réutilisables).",
+                risks: "Prompt mal conçu = sortie trompeuse, hors-sujet, ton inadapté, risque de non-conformité. Fuite d’informations si on met des éléments confidentiels dans le prompt.",
+                management_questions: "Quels éléments sont obligatoires dans nos prompts (objectif, audience, sources, ton, interdits) et lesquels sont interdits (données sensibles, infos clients) ?"
+            },
+            {
+                id: "4",
+                term: "Hallucination",
+                definition: "Erreur où l’IA invente une information non vérifiable ou fausse en la présentant comme vraie.",
+                opportunities: "Très utile pour explorer des pistes (angles, structures, formulations) tant que c’est traité comme un brouillon. Peut aider à repérer des zones à documenter en listant ce qu’il “faudrait vérifier”.",
+                risks: "Risque de publier des erreurs factuelles, juridiques, produit, ou de déformer une source. Risque de décrédibiliser la marque et l’expertise.",
+                management_questions: "Qu’est-ce qui doit obligatoirement être sourcé, et qui valide factuellement avant publication ou envoi client ?"
+            },
+            {
+                id: "5",
+                term: "RAG (Retrieval-Augmented Generation)",
+                definition: "Technique où l’IA récupère des informations dans une base documentaire (pages, PDF, FAQ, contrats, etc.) puis génère une réponse en s’appuyant sur ces contenus.",
+                opportunities: "Créer un assistant marketing “branché” sur les docs (offres, pitch, cas clients, guidelines), donc réponses plus alignées. Réduire les inventions en forçant l’ancrage sur des sources.",
+                risks: "Si la base est mauvaise, obsolète, non gouvernée, l’IA devient très sûre d’elle sur de mauvaises infos. Risque d’exposer des documents à des personnes non autorisées si la gouvernance est floue.",
+                management_questions: "Quelle est la “source de vérité”, qui la maintient à jour, et quelles règles d’accès s’applquent aux documents utilisés ?"
+            },
+            {
+                id: "6",
+                term: "Fine-tuning / Affinage",
+                definition: "Ajustement d’un modèle existant sur des données ciblées pour modifier son comportement (style, règles, tâches, vocabulaire) ou ses performances sur un domaine.",
+                opportunities: "Obtenir une IA plus cohérente avec le vocabulaire produit, les règles de marque, les catégories internes. Réduire l’effort de prompting pour des tâches répétitives.",
+                risks: "Coûteux, difficile à maintenir, risque d’“apprendre” des erreurs si les données sont mauvaises. Risque juridique et confidentialité sur les données utilisées pour l’affinage.",
+                management_questions: "Qu’est-ce qui justeifie un affinage plutôt qu’un bon prompt + une base RAG + des règles de validation ?"
+            },
+            {
+                id: "7",
+                term: "IA Act",
+                definition: "Cadre réglementaire européen qui encadre certains usages de l’IA selon le niveau de risque, avec des obligations possibles (transparence, gouvernance, documentation, contrôle).",
+                opportunities: "Donner un langage commun avec juridique, compliance, achats, DSI pour cadrer les fournisseurs et les usages. Anticiper les exigences des clients grands comptes.",
+                risks: "Non-conformité, risques contractuels, risques d’image si usage perçu comme opaque ou irresponsable. Frein projet si on découvre les obligations trop tard.",
+                management_questions: "Notre usage est-il concerné, et quelles preuves devons-nous exiger d’un fournisseur (documentation, transparence, contrôle) ?"
+            },
+            {
+                id: "8",
+                term: "RGPD (Règlement Général sur la Protection des Données)",
+                definition: "Réglementation européenne sur la protection des données personnelles, qui encadre la collecte, le traitement, la conservation, la sécurité, et les droits des personnes.",
+                opportunities: "Cadrer proprement CRM, segmentation, personalization, scoring, automatisations, en évitant les bricolages. Renforcer la confiance client via des pratiques claires.",
+                risks: "Risque de mettre des données personnelles dans des outils IA non maîtrisés. Risques juridiques, réputationnels, et opérationnels (effacement, accès, violation de données).",
+                management_questions: "Quelles données personnelles peuvent entrer dans un outil IA, dans quels outils, avec quels réglages, et avec quelle base légale ?"
+            },
+            {
+                id: "9",
+                term: "GEO (Generative Engine Optimization)",
+                definition: "Ensemble de pratiques visant à rendre un contenu facilement compréhensible et réutilisable par des moteurs et assistants génératifs pour être cité ou recommandé.",
+                opportunities: "Structurer les contenus pour être repris dans des réponses d’IA (définitions, preuves, sources, FAQ, comparatifs). Améliorer la découvrabilité au-delà du SEO classique.",
+                risks: "Risque de produire du contenu “optimisé IA” sans valeur, donc perte de crédibilité. Risque de dépendance à des plateformes dont les règles bougent.",
+                management_questions: "Quelles pages sont stratégiques à “rendre citables”, et quelles preuves/sources met-on pour mériter la citation ?"
+            },
+            {
+                id: "10",
+                term: "Agent IA",
+                definition: "Logiciel qui planifie et exécute des tâches en plusieurs étapes, parfois en utilisant des outils (emails, calendrier, CRM, navigateur), avec un objectif donné.",
+                opportunities: "Automatiser des chaînes de tâches (veille -> tri -> synthèse -> brief -> diffusion interne). Accélérer l’exécution de tâches marketing répétitives avec un cadre.",
+                risks: "Risque d’actions non souhaitées si l’agent a trop de permissions. Risque de pertes de données, d’erreurs de publication, ou d’envoi au mauvais destinataire.",
+                management_questions: "Quelles permissions minimales on donne à l’agent, quelles actions nécessitent validation humaine, et comment on trace ce qui a été fait ?"
+            }
+        ];
 
-        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        let dictionaryData = [];
-
-        const searchInput = document.getElementById('search-input');
-        const dictionaryList = document.getElementById('dictionary-list');
-        const loadingState = document.getElementById('loading-state');
-
-        document.addEventListener('DOMContentLoaded', async () => {
-            await fetchDictionaryData();
+        document.addEventListener('DOMContentLoaded', () => {
+            const dictionaryList = document.getElementById('dictionary-list');
+            if (dictionaryList) {
+                renderDictionary(dictionaryData);
+            }
             setupKeyboardEvent();
         });
 
-        // Requêtage standardisé ultra-robuste sur le schéma minuscule Postgres
-        async function fetchDictionaryData() {
-            try {
-                const { data, error } = await supabase
-                    .from('dictionary')
-                    .select('*')
-                    .order('term', { ascending: true }); 
-
-                if (error) throw error;
-
-                dictionaryData = data || [];
-                
-                loadingState.classList.add('hidden');
-                dictionaryList.classList.remove('hidden');
-                
-                renderDictionary(dictionaryData);
-
-            } catch (error) {
-                console.error('Erreur Critique Supabase Core:', error.message);
-                loadingState.innerHTML = `<div class="text-xs text-slate-400 py-4">Erreur de chargement.</div>`;
-            }
-        }
-
-        // Rendu dynamique unitaire de la page unique
         function renderDictionary(data) {
+            const dictionaryList = document.getElementById('dictionary-list');
+            if (!dictionaryList) return;
+            
             dictionaryList.innerHTML = data.map(item => `
                 <div class="dictionary-item group transition-colors duration-150 hover:bg-slate-50/50" id="term-${slugify(item.term)}">
-                    
                     <button 
                         onclick="toggleAccordion('content-${item.id}', 'icon-${item.id}')"
                         class="w-full flex items-center justify-between text-left px-6 py-5 cursor-pointer focus:outline-hidden"
@@ -154,24 +203,16 @@
                         <span class="text-lg font-bold text-[#002B49] group-hover:text-cyan-700 transition-colors tracking-tight font-adetem">
                             ${item.term}
                         </span>
-                        <svg 
-                            id="icon-${item.id}"
-                            class="w-4 h-4 text-slate-400 transform transition-transform duration-300 ease-in-out group-hover:text-slate-600" 
-                            fill="none" 
-                            stroke="currentColor" 
-                            viewBox="0 0 24 24"
-                        >
+                        <svg id="icon-${item.id}" class="w-4 h-4 text-slate-400 transform transition-transform duration-300 ease-in-out group-hover:text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </button>
 
                     <div id="content-${item.id}" class="accordion-content max-h-0 overflow-hidden opacity-0 bg-slate-50/30">
                         <div class="px-6 pb-6 pt-1 space-y-4 text-slate-800">
-                            
                             <div class="text-base leading-relaxed text-slate-600 font-normal border-b border-slate-100 pb-4">
                                 ${item.definition}
                             </div>
-                            
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
                                 ${item.opportunities ? `
                                     <div class="p-4 bg-white border border-slate-200 rounded-md shadow-2xs">
@@ -181,7 +222,6 @@
                                         <p class="text-xs text-slate-600 leading-relaxed">${item.opportunities}</p>
                                     </div>
                                 ` : ''}
-                                
                                 ${item.risks ? `
                                     <div class="p-4 bg-white border border-slate-200 rounded-md shadow-2xs">
                                         <div class="text-xs font-bold text-rose-700 uppercase tracking-wider mb-1 flex items-center">
@@ -191,7 +231,6 @@
                                     </div>
                                 ` : ''}
                             </div>
-
                             ${item.management_questions ? `
                                 <div class="p-4 bg-[#002B49] text-white rounded-md shadow-xs mt-2">
                                     <div class="text-[10px] font-bold uppercase tracking-widest text-cyan-300 mb-1">
@@ -200,14 +239,13 @@
                                     <p class="text-sm font-medium leading-relaxed">${item.management_questions}</p>
                                 </div>
                             ` : ''}
-
                         </div>
                     </div>
                 </div>
             `).join('');
         }
 
-        // Système d'ancrage et de défilement unitaire
+        // FIX SÉCURISÉ : Recherche et scroll ciblé
         function scrollToAndOpen(exactTermName) {
             const targetItem = dictionaryData.find(item => 
                 item.term.toLowerCase().includes(exactTermName.toLowerCase()) ||
@@ -218,14 +256,11 @@
                 const targetElement = document.getElementById(`term-${slugify(targetItem.term)}`);
                 if (targetElement) {
                     targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    
                     const content = document.getElementById(`content-${targetItem.id}`);
                     const icon = document.getElementById(`icon-${targetItem.id}`);
-                    
                     if (content && (!content.style.maxHeight || content.style.maxHeight === '0px')) {
                         document.querySelectorAll('.accordion-content').forEach(el => { el.style.maxHeight = '0px'; el.style.opacity = '0'; });
                         document.querySelectorAll('.dictionary-item svg').forEach(svg => svg.style.transform = 'rotate(0deg)');
-                        
                         content.style.maxHeight = content.scrollHeight + 'px';
                         content.style.opacity = '1';
                         icon.style.transform = 'rotate(180deg)';
@@ -235,23 +270,30 @@
         }
 
         function triggerSearch() {
-            const query = searchInput.value.trim();
-            if (query) {
-                scrollToAndOpen(query);
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) {
+                const query = searchInput.value.trim();
+                if (query) {
+                    scrollToAndOpen(query);
+                }
             }
         }
 
         function setupKeyboardEvent() {
-            searchInput.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') {
-                    triggerSearch();
-                }
-            });
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) {
+                searchInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') { triggerSearch(); }
+                });
+            }
         }
 
+        // Gestion unitaire des panneaux tiroirs accordéons
         function toggleAccordion(contentId, iconId) {
             const content = document.getElementById(contentId);
             const icon = document.getElementById(iconId);
+            if (!content || !icon) return;
+            
             if (content.style.maxHeight && content.style.maxHeight !== '0px') {
                 content.style.maxHeight = '0px';
                 content.style.opacity = '0';
