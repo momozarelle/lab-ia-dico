@@ -3,74 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Les Mots de l'IA — Le Lab IA</title>
+    <title>Les Mots de l'IA — Le Lab IA ADETEM</title>
     <!-- Tailwind CSS v4 CDN -->
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <!-- Supabase JS Client CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <!-- Google Fonts Éditioriales -->
+    <!-- Google Fonts - Identité Moderne ADETEM -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #fbfbfa;
-            color: #191919;
-        }
-        .serif-title {
-            font-family: 'Instrument Serif', serif;
+            background-color: #f8fafc; /* Fond gris-bleu très clair institutionnel */
+            color: #0f172a; /* Slate 900 profond */
         }
         .accordion-content {
             transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease-in-out;
         }
     </style>
 </head>
-<body class="min-h-screen selection:bg-stone-200 selection:text-stone-900">
+<body class="min-h-screen selection:bg-cyan-500/20 selection:text-cyan-900">
 
-    <!-- Header / Navigation Épurée -->
-    <header class="border-b border-stone-200/60 bg-[#fbfbfa]/80 backdrop-blur-md sticky top-0 z-50">
-        <div class="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <span class="text-sm font-semibold tracking-wider uppercase text-stone-500">Le Lab IA</span>
-                <span class="text-stone-300">/</span>
-                <span class="text-sm font-medium text-stone-800">Les Mots de l'IA</span>
+    <!-- Header Institutionnel ADETEM -->
+    <header class="border-b border-slate-200 bg-white/90 backdrop-blur-md sticky top-0 z-50 shadow-xs">
+        <div class="max-w-4xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <!-- Intégration du Logo Officiel du Lab IA -->
+                <img 
+                    src="https://goviudqrftefrnrdamxk.supabase.co/storage/v1/object/public/Visuels%20Lab%20IA/logo%20lab%20IA.png" 
+                    alt="Logo Le Lab IA ADETEM" 
+                    class="h-12 w-auto object-contain"
+                />
             </div>
-            <div class="text-xs text-stone-400 font-mono">Lecture seule</div>
+            <div class="flex items-center space-x-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span class="text-xs text-slate-500 font-medium">Référentiel 2026</span>
+            </div>
         </div>
     </header>
 
     <!-- Conteneur Principal -->
-    <main class="max-w-4xl mx-auto px-6 py-12 md:py-20">
+    <main class="max-w-4xl mx-auto px-6 py-12 md:py-16">
         
         <!-- Hero Section -->
-        <section class="mb-12 md:mb-16">
-            <h1 class="serif-title text-6xl md:text-7xl font-normal tracking-tight text-stone-900 mb-4">
+        <section class="mb-12 border-b border-slate-200 pb-10">
+            <div class="inline-block text-[11px] font-bold uppercase tracking-widest text-cyan-700 bg-cyan-50 px-2.5 py-1 rounded-sm mb-4">
+                Boîte à outils opérationnelle
+            </div>
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-[#002B49] mb-4">
                 Les Mots de l'IA.
             </h1>
-            <p class="text-stone-500 text-lg md:text-xl font-light max-w-xl leading-relaxed">
-                Un dictionnaire interactif et pragmatique pour comprendre les enjeux, piloter les systèmes et saisir les opportunités de l'intelligence artificielle.
+            <p class="text-slate-600 text-base md:text-lg font-normal max-w-2xl leading-relaxed">
+                Le glossaire interactif du marketing augmenté. Conçu par le <span class="font-semibold text-slate-800">Lab IA de l'Adetem</span> pour guider les professionnels du marketing vers une industrialisation responsable, maîtrisée et durable.
             </p>
         </section>
 
-        <!-- Section Top 5 / Tendances -->
-        <section class="mb-12 p-6 rounded-2xl bg-stone-100/60 border border-stone-200/40">
-            <h2 class="text-xs font-semibold uppercase tracking-widest text-stone-400 mb-3 flex items-center">
-                <svg class="w-3 h-3 mr-1.5 text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+        <!-- Section Top 5 / Tendances Marketeurs -->
+        <section class="mb-10 p-5 rounded-lg bg-white border border-slate-200 shadow-xs">
+            <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center">
+                <svg class="w-3.5 h-3.5 mr-2 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
                 </svg>
-                Les 5 termes les plus recherchés
+                Notions clés prioritaires
             </h2>
             <div id="trending-container" class="flex flex-wrap gap-2">
-                <span class="text-sm text-stone-400 animate-pulse">Chargement des tendances...</span>
+                <span class="text-sm text-slate-400 animate-pulse">Chargement des priorités...</span>
             </div>
         </section>
 
         <!-- Barre de Recherche Universelle -->
-        <section class="mb-10 sticky top-20 z-40">
+        <section class="mb-8 sticky top-24 z-40">
             <div class="relative group">
-                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-stone-400 group-focus-within:text-stone-600 transition-colors">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-cyan-600 transition-colors">
                     <svg class="w-5 h-5 stroke-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                     </svg>
@@ -78,36 +84,36 @@
                 <input 
                     type="text" 
                     id="search-input" 
-                    placeholder="Rechercher un terme, un concept, une définition..." 
-                    class="w-full pl-12 pr-4 py-4 bg-[#fbfbfa] border border-stone-200 rounded-xl shadow-xs text-stone-900 placeholder-stone-400 focus:outline-hidden focus:ring-1 focus:ring-stone-400 focus:border-stone-400 transition-all text-base md:text-lg"
+                    placeholder="Filtrer par terme, définition ou enjeu de pilotage..." 
+                    class="w-full pl-12 pr-4 py-3.5 bg-white border border-slate-200 rounded-lg shadow-sm text-slate-900 placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-600 transition-all text-base"
                 />
-                <div id="search-count" class="absolute inset-y-0 right-0 pr-4 flex items-center text-xs text-stone-400 pointer-events-none font-mono"></div>
+                <div id="search-count" class="absolute inset-y-0 right-0 pr-4 flex items-center text-xs text-slate-400 pointer-events-none font-mono font-bold"></div>
             </div>
         </section>
 
         <!-- Liste Principale du Dictionnaire -->
         <section>
             <!-- État de chargement -->
-            <div id="loading-state" class="py-12 text-center text-stone-400 font-light">
-                <div class="inline-block animate-spin rounded-full h-6 w-6 border-2 border-stone-300 border-t-stone-600 mb-2"></div>
-                <div>Synchronisation avec la base de connaissances du Lab IA...</div>
+            <div id="loading-state" class="py-12 text-center text-slate-500 font-medium">
+                <div class="inline-block animate-spin rounded-full h-5 w-5 border-2 border-slate-300 border-t-cyan-600 mb-2"></div>
+                <div class="text-sm">Connexion au référentiel ADETEM...</div>
             </div>
 
             <!-- État vide -->
-            <div id="empty-state" class="hidden py-16 text-center border border-dashed border-stone-200 rounded-xl bg-stone-50/50">
-                <p class="text-stone-400 font-light text-base">Aucun terme ne correspond à votre recherche.</p>
-                <button onclick="resetSearch()" class="mt-2 text-xs text-stone-600 underline underline-offset-4 hover:text-stone-900 transition-colors">Réinitialiser le filtre</button>
+            <div id="empty-state" class="hidden py-12 text-center border border-dashed border-slate-300 rounded-lg bg-white">
+                <p class="text-slate-500 text-sm">Aucune correspondance trouvée pour cette recherche.</p>
+                <button onclick="resetSearch()" class="mt-2 text-xs font-bold text-cyan-600 hover:text-cyan-700 transition-colors">Réinitialiser les filtres</button>
             </div>
 
             <!-- Conteneur des Mots -->
-            <div id="dictionary-list" class="divide-y divide-stone-200/60 border-t border-b border-stone-200/60"></div>
+            <div id="dictionary-list" class="bg-white border border-slate-200 rounded-lg shadow-xs divide-y divide-slate-100 overflow-hidden"></div>
         </section>
 
     </main>
 
-    <!-- Footer -->
-    <footer class="max-w-4xl mx-auto px-6 py-12 border-t border-stone-200/40 text-center text-xs text-stone-400 font-mono tracking-wide">
-        &copy; 2026 Le Lab IA. Édition et mise à jour continues.
+    <!-- Footer Institutionnel -->
+    <footer class="max-w-4xl mx-auto px-6 py-12 border-t border-slate-200 text-center text-xs text-slate-400 font-medium uppercase tracking-wider">
+        &copy; 2026 ADETEM — Le Lab IA. Tous droits réservés. Engagés pour un marketing responsable.
     </footer>
 
     <!-- Script de Logique & Connexion Supabase -->
@@ -139,9 +145,7 @@
 
                 if (error) throw error;
 
-                // Nettoyage automatique à l'affichage pour écarter les lignes vides du tableur source
                 dictionaryData = (data || []).filter(item => item["Terme"] && item["Définition factuelle"]);
-                
                 loadingState.classList.add('hidden');
                 
                 renderTrending();
@@ -150,8 +154,7 @@
             } catch (error) {
                 console.error('Erreur Supabase Fetch:', error.message);
                 loadingState.innerHTML = `
-                    <div class="text-red-500 font-medium">Échec de synchronisation avec la base de données.</div>
-                    <div class="text-xs text-stone-400 mt-1">${error.message}</div>
+                    <div class="text-red-600 font-semibold p-4 bg-red-50 rounded-lg text-sm">Échec de synchronisation avec la base de données ADETEM.</div>
                 `;
             }
         }
@@ -161,14 +164,14 @@
             const finalTrending = trendingItems.length > 0 ? trendingItems : dictionaryData.slice(0, 5);
 
             if (finalTrending.length === 0) {
-                trendingContainer.innerHTML = `<span class="text-xs text-stone-400 font-light">Aucun mot disponible.</span>`;
+                trendingContainer.innerHTML = `<span class="text-xs text-slate-400">Aucun mot disponible.</span>`;
                 return;
             }
 
             trendingContainer.innerHTML = finalTrending.map(item => `
                 <button 
                     onclick="triggerSearchAndOpen('${item["Terme"].replace(/'/g, "\\'")}')"
-                    class="px-3 py-1.5 text-xs font-medium bg-[#fbfbfa] text-stone-700 border border-stone-200 rounded-full hover:border-stone-400 hover:text-stone-900 transition-all cursor-pointer shadow-2xs"
+                    class="px-3 py-1.5 text-xs font-semibold bg-slate-50 text-slate-700 border border-slate-200 rounded-md hover:bg-cyan-50 hover:border-cyan-200 hover:text-cyan-700 transition-all cursor-pointer shadow-2xs"
                 >
                     ${item["Terme"]}
                 </button>
@@ -179,50 +182,78 @@
             if (data.length === 0) {
                 dictionaryList.innerHTML = '';
                 emptyState.classList.remove('hidden');
-                searchCount.textContent = '0 terme';
+                searchCount.textContent = '0';
                 return;
             }
 
             emptyState.classList.add('hidden');
-            searchCount.textContent = `${data.length} ${data.length > 1 ? 'termes' : 'terme'}`;
+            searchCount.textContent = `${data.length} ${data.length > 1 ? 'NOTIONS' : 'NOTION'}`;
 
             dictionaryList.innerHTML = data.map(item => `
-                <div class="dictionary-item py-4 group" id="term-${slugify(item["Terme"])}">
+                <div class="dictionary-item group transition-colors duration-150 hover:bg-slate-50/50" id="term-${slugify(item["Terme"])}">
+                    
+                    <!-- Ligne d'entête principale -->
                     <button 
                         onclick="toggleAccordion('content-${item.id}', 'icon-${item.id}')"
-                        class="w-full flex items-center justify-between text-left py-2 cursor-pointer focus:outline-hidden"
+                        class="w-full flex items-center justify-between text-left px-6 py-4.5 cursor-pointer focus:outline-hidden"
                     >
-                        <span class="text-xl font-medium text-stone-900 group-hover:text-stone-600 transition-colors tracking-tight">
+                        <span class="text-lg font-bold text-[#002B49] group-hover:text-cyan-700 transition-colors tracking-tight">
                             ${item["Terme"]}
                         </span>
-                        <div class="flex items-center space-x-2">
-                            ${item.is_trending ? '<span class="text-[10px] font-mono tracking-wider bg-stone-100 text-stone-500 px-2 py-0.5 rounded-xs uppercase">Top 5</span>' : ''}
+                        <div class="flex items-center space-x-3">
+                            ${item.is_trending ? '<span class="text-[9px] font-bold tracking-wider bg-cyan-100 text-cyan-800 px-2 py-0.5 rounded-xs uppercase">Stratégique</span>' : ''}
                             <svg 
                                 id="icon-${item.id}"
-                                class="w-5 h-5 text-stone-400 transform transition-transform duration-300 ease-in-out group-hover:text-stone-600" 
+                                class="w-4 h-4 text-slate-400 transform transition-transform duration-300 ease-in-out group-hover:text-slate-600" 
                                 fill="none" 
                                 stroke="currentColor" 
                                 viewBox="0 0 24 24"
                             >
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v16m8-8H4"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path>
                             </svg>
                         </div>
                     </button>
 
-                    <div id="content-${item.id}" class="accordion-content max-h-0 overflow-hidden opacity-0">
-                        <div class="pt-2 pb-4 space-y-4 text-stone-800">
-                            <div class="text-base leading-relaxed font-light text-stone-700">
+                    <!-- Tiroir des détails et diagnostics -->
+                    <div id="content-${item.id}" class="accordion-content max-h-0 overflow-hidden opacity-0 bg-slate-50/30">
+                        <div class="px-6 pb-6 pt-1 space-y-4 text-slate-800">
+                            
+                            <!-- Définition -->
+                            <div class="text-base leading-relaxed text-slate-600 font-normal border-b border-slate-100 pb-4">
                                 ${item["Définition factuelle"]}
                             </div>
                             
-                            <div class="p-5 rounded-xl bg-stone-100 border-l border-stone-400 mt-2 space-y-3 text-sm">
-                                <div class="text-xs font-semibold uppercase tracking-wider text-stone-500 font-mono">
-                                    Analyse de Pilotage — Le Lab IA
-                                </div>
-                                ${item["Opportunités (pour un marketeur)"] ? `<div><strong class="text-stone-900">⚡ Opportunités :</strong> ${item["Opportunités (pour un marketeur)"]}</div>` : ''}
-                                ${item["Risques (pour un marketeur)"] ? `<div><strong class="text-stone-900">⚠️ Risques :</strong> ${item["Risques (pour un marketeur)"]}</div>` : ''}
-                                ${item["Question de pilotage"] ? `<div class="pt-1 text-stone-600 italic">👉 ${item["Question de pilotage"]}</div>` : ''}
+                            <!-- Cadre d'Analyse Métier Lab IA -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+                                ${item["Opportunités (pour un marketeur)"] ? `
+                                    <div class="p-4 bg-white border border-slate-200 rounded-md shadow-2xs">
+                                        <div class="text-xs font-bold text-emerald-700 uppercase tracking-wider mb-1 flex items-center">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span> Opportunités Métier
+                                        </div>
+                                        <p class="text-xs text-slate-600 leading-relaxed">${item["Opportunités (pour un marketeur)"]}</p>
+                                    </div>
+                                ` : ''}
+                                
+                                ${item["Risques (pour un marketeur)"] ? `
+                                    <div class="p-4 bg-white border border-slate-200 rounded-md shadow-2xs">
+                                        <div class="text-xs font-bold text-rose-700 uppercase tracking-wider mb-1 flex items-center">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-rose-500 mr-1.5"></span> Risques & Points de vigilance
+                                        </div>
+                                        <p class="text-xs text-slate-600 leading-relaxed">${item["Risques (pour un marketeur)"]}</p>
+                                    </div>
+                                ` : ''}
                             </div>
+
+                            <!-- Question de pilotage transverse -->
+                            ${item["Question de pilotage"] ? `
+                                <div class="p-4 bg-cyan-900 text-white rounded-md shadow-xs mt-2">
+                                    <div class="text-[10px] font-bold uppercase tracking-widest text-cyan-300 mb-1">
+                                        Question de pilotage managérial
+                                    </div>
+                                    <p class="text-sm font-medium leading-relaxed">${item["Question de pilotage"]}</p>
+                                </div>
+                            ` : ''}
+
                         </div>
                     </div>
                 </div>
@@ -240,7 +271,8 @@
                     (item["Terme"] && item["Terme"].toLowerCase().includes(query)) || 
                     (item["Définition factuelle"] && item["Définition factuelle"].toLowerCase().includes(query)) ||
                     (item["Opportunités (pour un marketeur)"] && item["Opportunités (pour un marketeur)"].toLowerCase().includes(query)) ||
-                    (item["Risques (pour un marketeur)"] && item["Risques (pour un marketeur)"].toLowerCase().includes(query))
+                    (item["Risques (pour un marketeur)"] && item["Risques (pour un marketeur)"].toLowerCase().includes(query)) ||
+                    (item["Question de pilotage"] && item["Question de pilotage"].toLowerCase().includes(query))
                 );
                 renderDictionary(filtered);
             });
@@ -258,7 +290,7 @@
                 document.querySelectorAll('.dictionary-item svg').forEach(svg => svg.style.transform = 'rotate(0deg)');
                 content.style.maxHeight = content.scrollHeight + 'px';
                 content.style.opacity = '1';
-                icon.style.transform = 'rotate(45deg)';
+                icon.style.transform = 'rotate(180deg)';
             }
         }
 
