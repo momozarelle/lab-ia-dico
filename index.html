@@ -10,8 +10,6 @@
     
     <!-- Tailwind CSS v4 CDN -->
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-    <!-- Supabase JS Client CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <!-- Google Fonts - Typographies Officielles ADETEM -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -114,41 +112,58 @@
             <div id="dictionary-list" class="bg-white border border-slate-200 rounded-lg shadow-xs divide-y divide-slate-100 overflow-hidden hidden"></div>
         </section>
 
-        <!-- Section Action de Création -->
-        <section class="bg-white border border-slate-200 rounded-lg p-6 shadow-xs">
-            <div class="flex items-center justify-between mb-4">
-                <h3 class="font-bold text-lg text-[#002B49] uppercase tracking-tight">Ajouter une nouvelle notion</h3>
-            </div>
-            <div class="grid grid-cols-1 gap-4 text-sm">
-                <div>
-                    <label class="block font-bold text-slate-700 mb-1">Nom du mot / Notion</label>
-                    <input type="text" id="new-term" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md focus:outline-cyan-600" placeholder="Ex: Multimodalité">
-                </div>
-                <div>
-                    <label class="block font-bold text-slate-700 mb-1">Définition factuelle</label>
-                    <textarea id="new-definition" rows="3" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md focus:outline-cyan-600" placeholder="Saisir la description technique..."></textarea>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Bouton & Section d'Ajout d'un nouveau mot -->
+        <section class="mb-12">
+            <button 
+                id="toggle-add-form-btn"
+                onclick="toggleAddForm()" 
+                class="w-full py-4 bg-[#002B49] text-white font-bold text-sm uppercase tracking-wider rounded-lg shadow-sm hover:bg-cyan-900 transition-all cursor-pointer flex items-center justify-center space-x-2"
+            >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path>
+                </svg>
+                <span>Ajouter un nouveau mot</span>
+            </button>
+
+            <!-- Formulaire replié par défaut -->
+            <div id="add-word-form-container" class="mt-4 bg-white border border-slate-200 rounded-lg p-6 shadow-xs max-h-0 overflow-hidden opacity-0 transition-all duration-300 ease-in-out">
+                <div class="grid grid-cols-1 gap-4 text-sm">
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">Enjeux & Opportunités</label>
-                        <textarea id="new-opportunities" rows="3" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md focus:outline-cyan-600" placeholder="Pour un marketeur..."></textarea>
+                        <label class="block font-bold text-slate-700 mb-1">Nom du mot / Notion</label>
+                        <input type="text" id="new-term" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md focus:outline-cyan-600" placeholder="Ex: Multimodalité">
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">Facteurs de Risque</label>
-                        <textarea id="new-risks" rows="3" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md focus:outline-cyan-600" placeholder="Points de vigilance stratégiques..."></textarea>
+                        <label class="block font-bold text-slate-700 mb-1">Définition factuelle</label>
+                        <textarea id="new-definition" rows="3" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md focus:outline-cyan-600" placeholder="Saisir la description technique..."></textarea>
                     </div>
-                </div>
-                <div>
-                    <label class="block font-bold text-slate-700 mb-1">Question de pilotage managérial</label>
-                    <input type="text" id="new-questions" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md focus:outline-cyan-600" placeholder="La question clé à se poser...">
-                </div>
-                <div class="pt-2">
-                    <button 
-                        onclick="createWord()" 
-                        class="w-full md:w-auto px-6 py-3 bg-emerald-600 text-white font-bold uppercase tracking-wider rounded-md hover:bg-emerald-700 shadow-sm transition-all cursor-pointer"
-                    >
-                        Valider et Enregistrer
-                    </button>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block font-bold text-slate-700 mb-1">Enjeux & Opportunités</label>
+                            <textarea id="new-opportunities" rows="3" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md focus:outline-cyan-600" placeholder="Pour un marketeur..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block font-bold text-slate-700 mb-1">Facteurs de Risque</label>
+                            <textarea id="new-risks" rows="3" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md focus:outline-cyan-600" placeholder="Points de vigilance stratégiques..."></textarea>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Question de pilotage managérial</label>
+                        <input type="text" id="new-questions" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md focus:outline-cyan-600" placeholder="La question clé à se poser...">
+                    </div>
+                    <div class="pt-2 flex items-center space-x-2">
+                        <button 
+                            onclick="createWord()" 
+                            class="px-6 py-3 bg-emerald-600 text-white font-bold uppercase tracking-wider rounded-md hover:bg-emerald-700 shadow-sm transition-all cursor-pointer text-xs"
+                        >
+                            Ajouter mon mot
+                        </button>
+                        <button 
+                            onclick="toggleAddForm()" 
+                            class="px-6 py-3 bg-slate-100 text-slate-700 font-bold uppercase tracking-wider rounded-md hover:bg-slate-200 shadow-sm transition-all cursor-pointer text-xs"
+                        >
+                            Annuler
+                        </button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -162,13 +177,13 @@
         const SUPABASE_URL = 'https://goviudqrftefrnrdamxk.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdvdml1ZHFyZnRlZnJucmRhbXhrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI5MTYxOTYsImV4cCI6MjA5ODQ5MjE5Nn0.BnjHGjgCD3uVch5kT2FyRiGXzAVM9k6rMpq4p2Hhci4';
 
-        // Initialisation globale unique du client SDK Supabase
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         let dictionaryData = [];
 
         const searchInput = document.getElementById('search-input');
         const dictionaryList = document.getElementById('dictionary-list');
         const loadingState = document.getElementById('loading-state');
+        const addWordFormContainer = document.getElementById('add-word-form-container');
 
         document.addEventListener('DOMContentLoaded', async () => {
             await fetchDictionaryData();
@@ -179,8 +194,7 @@
             try {
                 const { data, error } = await supabaseClient
                     .from('dictionary')
-                    .select('*')
-                    .order('term', { ascending: true }); // Tri A-Z natif Postgres
+                    .select('*');
 
                 if (error) throw error;
 
@@ -189,20 +203,23 @@
                 loadingState.classList.add('hidden');
                 dictionaryList.classList.remove('hidden');
                 
-                renderDictionary(dictionaryData);
+                sortAndRenderDictionary(dictionaryData);
             } catch (error) {
                 console.error('Erreur Supabase Core API:', error.message);
             }
         }
 
-        function renderDictionary(data) {
-            // Classement JS sécurité par ordre alphabétique
-            data.sort((a, b) => a.term.localeCompare(b.term));
+        // Tri A-Z systématique côté client pour blinder l'affichage
+        function sortAndRenderDictionary(data) {
+            data.sort((a, b) => a.term.localeCompare(b.term, 'fr', { sensitivity: 'base' }));
+            renderDictionary(data);
+        }
 
+        function renderDictionary(data) {
             dictionaryList.innerHTML = data.map(item => `
                 <div class="dictionary-item group transition-colors duration-150 bg-white" id="term-${slugify(item.term)}">
                     
-                    <!-- Entête Notion -->
+                    <!-- Entête de ligne de la Notion -->
                     <div class="w-full flex items-center justify-between px-6 py-5 border-b border-slate-100 bg-white">
                         <button 
                             onclick="toggleAccordion('content-${item.id}', 'icon-${item.id}')"
@@ -212,24 +229,38 @@
                                 ${item.term}
                             </span>
                         </button>
-                        <div class="flex items-center space-x-3">
+                        
+                        <!-- Actions Collaboratives -->
+                        <div class="flex items-center space-x-2">
                             <button 
                                 onclick="enableInlineEdit('${item.id}')" 
-                                class="text-xs font-bold text-cyan-600 bg-cyan-50 px-2.5 py-1 rounded hover:bg-cyan-100 transition-all cursor-pointer flex items-center space-x-1"
+                                class="text-xs font-bold text-cyan-600 bg-cyan-50 px-2.5 py-1.5 rounded hover:bg-cyan-100 transition-all cursor-pointer flex items-center space-x-1"
                             >
                                 <span>🖋️ Modifier</span>
                             </button>
-                            <svg id="icon-${item.id}" class="w-4 h-4 text-slate-400 transform transition-transform duration-300 ease-in-out" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path>
-                            </svg>
+                            <button 
+                                onclick="deleteWord('${item.id}', '${item.term.replace(/'/g, "\\'")}')" 
+                                class="text-xs font-bold text-rose-600 bg-rose-50 px-2.5 py-1.5 rounded hover:bg-rose-100 transition-all cursor-pointer flex items-center space-x-1"
+                                title="Supprimer définitivement"
+                            >
+                                <span>🗑️</span>
+                            </button>
+                            <button 
+                                onclick="toggleAccordion('content-${item.id}', 'icon-${item.id}')"
+                                class="p-1 cursor-pointer"
+                            >
+                                <svg id="icon-${item.id}" class="w-4 h-4 text-slate-400 transform transition-transform duration-300 ease-in-out" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
                         </div>
                     </div>
 
                     <!-- Tiroir Accordéon Dépliable -->
                     <div id="content-${item.id}" class="accordion-content max-h-0 overflow-hidden opacity-0 bg-slate-50/30">
+                        
+                        <!-- Mode Lecture -->
                         <div class="px-6 pb-6 pt-4 space-y-4 text-slate-800" id="view-mode-${item.id}">
-                            
-                            <!-- Mode Lecture (Par défaut) -->
                             <div class="text-base leading-relaxed text-slate-600 font-normal border-b border-slate-100 pb-4">
                                 ${item.definition || '<em class="text-slate-400">Aucune définition renseignée.</em>'}
                             </div>
@@ -257,30 +288,30 @@
                             ` : ''}
                         </div>
 
-                        <!-- Mode Édition en ligne (Masqué par défaut) -->
+                        <!-- Mode Édition (Correction de hauteur Max-Height et overflow coupés) -->
                         <div class="px-6 pb-6 pt-4 space-y-4 text-slate-800 hidden" id="edit-mode-${item.id}">
-                            <div class="space-y-3 text-sm">
+                            <div class="space-y-4 text-sm">
                                 <div>
                                     <label class="block font-bold text-slate-700 mb-1">Définition factuelle</label>
-                                    <textarea id="edit-def-${item.id}" rows="3" class="w-full p-2 bg-white border border-slate-300 rounded-md focus:outline-cyan-600">${item.definition || ''}</textarea>
+                                    <textarea id="edit-def-${item.id}" rows="3" class="w-full p-2.5 bg-white border border-slate-200 rounded-md focus:outline-cyan-600">${item.definition || ''}</textarea>
                                 </div>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
                                         <label class="block font-bold text-slate-700 mb-1">Enjeux & Opportunités</label>
-                                        <textarea id="edit-opp-${item.id}" rows="3" class="w-full p-2 bg-white border border-slate-300 rounded-md focus:outline-cyan-600">${item.opportunities || ''}</textarea>
+                                        <textarea id="edit-opp-${item.id}" rows="3" class="w-full p-2.5 bg-white border border-slate-200 rounded-md focus:outline-cyan-600">${item.opportunities || ''}</textarea>
                                     </div>
                                     <div>
                                         <label class="block font-bold text-slate-700 mb-1">Facteurs de Risque</label>
-                                        <textarea id="edit-risk-${item.id}" rows="3" class="w-full p-2 bg-white border border-slate-300 rounded-md focus:outline-cyan-600">${item.risks || ''}</textarea>
+                                        <textarea id="edit-risk-${item.id}" rows="3" class="w-full p-2.5 bg-white border border-slate-200 rounded-md focus:outline-cyan-600">${item.risks || ''}</textarea>
                                     </div>
                                 </div>
                                 <div>
                                     <label class="block font-bold text-slate-700 mb-1">Question de pilotage managérial</label>
-                                    <input type="text" id="edit-ques-${item.id}" value="${item.management_questions || ''}" class="w-full p-2 bg-white border border-slate-300 rounded-md focus:outline-cyan-600">
+                                    <input type="text" id="edit-ques-${item.id}" value="${item.management_questions || ''}" class="w-full p-2.5 bg-white border border-slate-200 rounded-md focus:outline-cyan-600">
                                 </div>
-                                <div class="flex items-center space-x-2 pt-2">
-                                    <button onclick="saveInlineEdit('${item.id}')" class="px-4 py-2 bg-emerald-600 text-white font-bold text-xs uppercase tracking-wider rounded shadow-sm hover:bg-emerald-700 cursor-pointer">Enregistrer</button>
-                                    <button onclick="disableInlineEdit('${item.id}')" class="px-4 py-2 bg-slate-200 text-slate-700 font-bold text-xs uppercase tracking-wider rounded hover:bg-slate-300 cursor-pointer">Annuler</button>
+                                <div class="flex items-center space-x-2 pt-2 pb-2">
+                                    <button onclick="saveInlineEdit('${item.id}')" class="px-5 py-2.5 bg-emerald-600 text-white font-bold text-xs uppercase tracking-wider rounded shadow-sm hover:bg-emerald-700 cursor-pointer">Enregistrer</button>
+                                    <button onclick="disableInlineEdit('${item.id}')" class="px-5 py-2.5 bg-slate-200 text-slate-700 font-bold text-xs uppercase tracking-wider rounded hover:bg-slate-300 cursor-pointer">Annuler</button>
                                 </div>
                             </div>
                         </div>
@@ -289,15 +320,17 @@
             `).join('');
         }
 
-        // Passage au formulaire d'édition
+        // Gestion du déploiement sécurisé pour l'édition
         function enableInlineEdit(id) {
-            // Déployer le tiroir d'abord
             const content = document.getElementById(`content-${id}`);
             const icon = document.getElementById(`icon-${id}`);
-            if (content && content.style.maxHeight === '0px' || !content.style.maxHeight) {
-                content.style.maxHeight = '2000px'; // Donne assez d'amplitude pour les inputs
-                content.style.opacity = '1';
-                if(icon) icon.style.transform = 'rotate(180deg)';
+            
+            if (content) {
+                // On fait sauter les verrous de hauteur et de masquage pour éviter que les boutons soient tronqués
+                content.style.maxHeight = "none"; 
+                content.style.opacity = "1";
+                content.classList.remove("overflow-hidden");
+                if (icon) icon.style.transform = 'rotate(180deg)';
             }
             document.getElementById(`view-mode-${id}`).classList.add('hidden');
             document.getElementById(`edit-mode-${id}`).classList.remove('hidden');
@@ -306,12 +339,15 @@
         function disableInlineEdit(id) {
             document.getElementById(`view-mode-${id}`).classList.remove('hidden');
             document.getElementById(`edit-mode-${id}`).classList.add('hidden');
-            // Recalculer l'amplitude de fermeture
+            
             const content = document.getElementById(`content-${id}`);
-            if (content) content.style.maxHeight = content.scrollHeight + 'px';
+            if (content) {
+                content.classList.add("overflow-hidden");
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
         }
 
-        // Sauvegarde de l'édition en ligne
+        // Sauvegarde de l'édition en ligne vers Supabase
         async function saveInlineEdit(id) {
             const definition = document.getElementById(`edit-def-${id}`).value.trim();
             const opportunities = document.getElementById(`edit-opp-${id}`).value.trim();
@@ -326,7 +362,6 @@
 
                 if (error) throw error;
 
-                // Sync locale
                 const idx = dictionaryData.findIndex(item => item.id === id);
                 if (idx !== -1) {
                     dictionaryData[idx].definition = definition;
@@ -335,14 +370,47 @@
                     dictionaryData[idx].management_questions = management_questions;
                 }
 
-                renderDictionary(dictionaryData);
+                sortAndRenderDictionary(dictionaryData);
                 disableInlineEdit(id);
             } catch (error) {
                 alert("Erreur de modification Supabase : " + error.message);
             }
         }
 
-        // Création de A à Z d'un nouveau mot
+        // Suppression de mot sécurisée par boîte de dialogue
+        async function deleteWord(id, termName) {
+            const confirmed = confirm(`Voulez-vous vraiment supprimer le mot "${termName}" ?`);
+            if (!confirmed) return;
+
+            try {
+                const { error } = await supabaseClient
+                    .from('dictionary')
+                    .delete()
+                    .eq('id', id);
+
+                if (error) throw error;
+
+                // Mise à jour de l'état local
+                dictionaryData = dictionaryData.filter(item => item.id !== id);
+                sortAndRenderDictionary(dictionaryData);
+            } catch (error) {
+                alert("Erreur lors de la suppression : " + error.message);
+            }
+        }
+
+        // Formulaire d'ajout repliable
+        function toggleAddForm() {
+            if (addWordFormContainer.style.maxHeight && addWordFormContainer.style.maxHeight !== '0px') {
+                addWordFormContainer.style.maxHeight = '0px';
+                addWordFormContainer.style.opacity = '0';
+            } else {
+                addWordFormContainer.style.maxHeight = '1000px';
+                addWordFormContainer.style.opacity = '1';
+                document.getElementById('new-term').focus();
+            }
+        }
+
+        // Création d'un mot de A à Z vers Supabase
         async function createWord() {
             const term = document.getElementById('new-term').value.trim();
             const definition = document.getElementById('new-definition').value.trim();
@@ -363,22 +431,22 @@
 
                 if (error) throw error;
 
-                // Ajout local & Re-classement A-Z automatique
                 if (data && data[0]) {
                     dictionaryData.push(data[0]);
                 }
                 
-                renderDictionary(dictionaryData);
+                sortAndRenderDictionary(dictionaryData);
+                toggleAddForm(); // Replie le formulaire d'ajout
                 
-                // Vider les inputs du formulaire d'ajout
+                // Reset inputs
                 document.getElementById('new-term').value = '';
                 document.getElementById('new-definition').value = '';
                 document.getElementById('new-opportunities').value = '';
                 document.getElementById('new-risks').value = '';
                 document.getElementById('new-questions').value = '';
 
-                // Scroll vers le mot créé pour confirmation visuelle
-                setTimeout(() => { scrollToAndOpen(term); }, 200);
+                // Centrage et déploiement immédiat de la nouvelle carte créée
+                setTimeout(() => { scrollToAndOpen(term); }, 300);
 
             } catch (error) {
                 alert("Erreur lors de l'ajout du terme : " + error.message);
@@ -403,7 +471,7 @@
                         document.querySelectorAll('.accordion-content').forEach(el => { el.style.maxHeight = '0px'; el.style.opacity = '0'; });
                         document.querySelectorAll('.dictionary-item svg').forEach(svg => svg.style.transform = 'rotate(0deg)');
                         
-                        content.style.maxHeight = '2000px'; // Capacité d'amplitude étendue
+                        content.style.maxHeight = '2000px'; 
                         content.style.opacity = '1';
                         if (icon) icon.style.transform = 'rotate(180deg)';
                     }
@@ -427,7 +495,8 @@
         function toggleAccordion(contentId, iconId) {
             const content = document.getElementById(contentId);
             const icon = document.getElementById(iconId);
-            if (!content || !icon) return;
+            if (!content || !icon || document.getElementById(contentId).previousElementSibling.querySelector('button').classList.contains('hidden')) return;
+            
             if (content.style.maxHeight && content.style.maxHeight !== '0px') {
                 content.style.maxHeight = '0px';
                 content.style.opacity = '0';
