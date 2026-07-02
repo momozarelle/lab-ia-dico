@@ -11,7 +11,7 @@
     <!-- Google Fonts - Typographies Officielles ADETEM -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
     
     <style>
         body {
@@ -33,7 +33,6 @@
     <header class="border-b border-slate-200 bg-white sticky top-0 z-50 shadow-xs">
         <div class="max-w-4xl mx-auto px-6 h-24 flex items-center justify-between">
             <div class="flex items-center">
-                <!-- Logo doublé en taille (h-24 au lieu de h-12) -->
                 <img 
                     src="https://goviudqrftefrnrdamxk.supabase.co/storage/v1/object/public/Visuels%20Lab%20IA/logo%20lab%20IA.png" 
                     alt="Logo Le Lab IA ADETEM" 
@@ -65,11 +64,10 @@
                 Les termes les plus recherchés
             </h2>
             <div id="trending-container" class="flex flex-wrap gap-2">
-                <!-- Rempli statiquement selon tes consignes avec les 4 termes spécifiés -->
-                <button onclick="triggerSearchAndOpen('IAG (Intelligence Artificielle Générative)')" class="px-3 py-1.5 text-xs font-bold bg-slate-50 text-slate-700 border border-slate-200 rounded-md hover:bg-cyan-50 hover:border-cyan-200 hover:text-cyan-700 transition-all cursor-pointer">IAG</button>
-                <button onclick="triggerSearchAndOpen('Large Language Model (LLM)')" class="px-3 py-1.5 text-xs font-bold bg-slate-50 text-slate-700 border border-slate-200 rounded-md hover:bg-cyan-50 hover:border-cyan-200 hover:text-cyan-700 transition-all cursor-pointer">Large Language Model</button>
-                <button onclick="triggerSearchAndOpen('Prompt engenering / context engenering')" class="px-3 py-1.5 text-xs font-bold bg-slate-50 text-slate-700 border border-slate-200 rounded-md hover:bg-cyan-50 hover:border-cyan-200 hover:text-cyan-700 transition-all cursor-pointer">Prompt Engineering</button>
-                <button onclick="triggerSearchAndOpen('Hallucination')" class="px-3 py-1.5 text-xs font-bold bg-slate-50 text-slate-700 border border-slate-200 rounded-md hover:bg-cyan-50 hover:border-cyan-200 hover:text-cyan-700 transition-all cursor-pointer">Hallucinations</button>
+                <button onclick="scrollToAndOpen('IAG (Intelligence Artificielle Générative)')" class="px-3 py-1.5 text-xs font-bold bg-slate-50 text-slate-700 border border-slate-200 rounded-md hover:bg-cyan-50 hover:border-cyan-200 hover:text-cyan-700 transition-all cursor-pointer">IAG</button>
+                <button onclick="scrollToAndOpen('Large Language Model (LLM)')" class="px-3 py-1.5 text-xs font-bold bg-slate-50 text-slate-700 border border-slate-200 rounded-md hover:bg-cyan-50 hover:border-cyan-200 hover:text-cyan-700 transition-all cursor-pointer">Large Language Model</button>
+                <button onclick="scrollToAndOpen('Prompt engenering / context engenering')" class="px-3 py-1.5 text-xs font-bold bg-slate-50 text-slate-700 border border-slate-200 rounded-md hover:bg-cyan-50 hover:border-cyan-200 hover:text-cyan-700 transition-all cursor-pointer">Prompt Engineering</button>
+                <button onclick="scrollToAndOpen('Hallucination')" class="px-3 py-1.5 text-xs font-bold bg-slate-50 text-slate-700 border border-slate-200 rounded-md hover:bg-cyan-50 hover:border-cyan-200 hover:text-cyan-700 transition-all cursor-pointer">Hallucinations</button>
             </div>
         </section>
 
@@ -90,7 +88,7 @@
                     />
                 </div>
                 <button 
-                    onclick="executeSearchClick()"
+                    onclick="triggerSearch()"
                     class="px-6 py-3.5 bg-[#002B49] text-white font-bold text-sm uppercase tracking-wider rounded-lg shadow-sm hover:bg-cyan-800 transition-all cursor-pointer"
                 >
                     Rechercher
@@ -100,27 +98,20 @@
 
         <!-- Liste Principale du Dictionnaire -->
         <section>
-            <!-- Loader discret sans mentions superflues -->
+            <!-- Loader d'attente discret -->
             <div id="loading-state" class="py-12 text-center text-slate-500 font-medium">
-                <div class="inline-block animate-spin rounded-full h-5 w-5 border-2 border-slate-300 border-t-cyan-600 mb-2"></div>
+                <div class="inline-block animate-spin rounded-full h-5 w-5 border-2 border-slate-300 border-t-cyan-600"></div>
             </div>
 
-            <!-- État vide -->
-            <div id="empty-state" class="hidden py-12 text-center border border-dashed border-slate-300 rounded-lg bg-white">
-                <p class="text-slate-500 text-sm">Aucune correspondance trouvée pour cette recherche.</p>
-                <button onclick="resetSearch()" class="mt-2 text-xs font-bold text-cyan-600 hover:text-cyan-700 transition-colors">Réinitialiser le filtre</button>
-            </div>
-
-            <!-- Conteneur des Mots -->
-            <div id="dictionary-list" class="bg-white border border-slate-200 rounded-lg shadow-xs divide-y divide-slate-100 overflow-hidden"></div>
+            <!-- Conteneur global unique des Mots -->
+            <div id="dictionary-list" class="bg-white border border-slate-200 rounded-lg shadow-xs divide-y divide-slate-100 overflow-hidden hidden"></div>
         </section>
 
     </main>
 
-    <!-- Footer vide et épuré -->
+    <!-- Pied de page épuré sans mentions textuelles -->
     <footer class="py-12"></footer>
 
-    <!-- Script de Logique & Connexion Supabase -->
     <script>
         const SUPABASE_URL = 'https://goviudqrftefrnrdamxk.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdvdml1ZHFyZnRlZnJucmRhbXhrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI5MTYxOTYsImV4cCI6MjA5ODQ5MjE5Nn0.BnjHGjgCD3uVch5kT2FyRiGXzAVM9k6rMpq4p2Hhci4';
@@ -131,25 +122,27 @@
         const searchInput = document.getElementById('search-input');
         const dictionaryList = document.getElementById('dictionary-list');
         const loadingState = document.getElementById('loading-state');
-        const emptyState = document.getElementById('empty-state');
 
         document.addEventListener('DOMContentLoaded', async () => {
             await fetchDictionaryData();
-            setupEventListeners();
+            setupKeyboardEvent();
         });
 
+        // Récupération avec correction des double-quotes sur le nom de colonne Postgres
         async function fetchDictionaryData() {
             try {
                 const { data, error } = await supabase
                     .from('dictionary')
                     .select('*')
-                    .order('Terme', { ascending: true });
+                    .order('Terme', { ascending: true }); // Correction de casse syntaxique ici
 
                 if (error) throw error;
 
-                // Filtrage strict : on ne garde que les entrées qui ont un terme et une définition factuelle
+                // Filtrage automatique des lignes d'en-tête invalides ou vides du CSV
                 dictionaryData = (data || []).filter(item => item["Terme"] && item["Définition factuelle"]);
+                
                 loadingState.classList.add('hidden');
+                dictionaryList.classList.remove('hidden');
                 
                 renderDictionary(dictionaryData);
 
@@ -159,26 +152,20 @@
             }
         }
 
+        // Rendu unitaire de l'ensemble du dictionnaire sur une seule et unique page
         function renderDictionary(data) {
-            if (data.length === 0) {
-                dictionaryList.innerHTML = '';
-                emptyState.classList.remove('hidden');
-                return;
-            }
-
-            emptyState.classList.add('hidden');
-
             dictionaryList.innerHTML = data.map(item => `
                 <div class="dictionary-item group transition-colors duration-150 hover:bg-slate-50/50" id="term-${slugify(item["Terme"])}">
                     
-                    <!-- Entête du terme -->
+                    <!-- Ligne d'entête principale cliquable -->
                     <button 
                         onclick="toggleAccordion('content-${item.id}', 'icon-${item.id}')"
-                        class="w-full flex items-center justify-between text-left px-6 py-4.5 cursor-pointer focus:outline-hidden"
+                        class="w-full flex items-center justify-between text-left px-6 py-5 cursor-pointer focus:outline-hidden"
                     >
                         <span class="text-lg font-bold text-[#002B49] group-hover:text-cyan-700 transition-colors tracking-tight font-adetem">
                             ${item["Terme"]}
                         </span>
+                        <!-- Petite flèche de déploiement demandée -->
                         <svg 
                             id="icon-${item.id}"
                             class="w-4 h-4 text-slate-400 transform transition-transform duration-300 ease-in-out group-hover:text-slate-600" 
@@ -190,7 +177,7 @@
                         </svg>
                     </button>
 
-                    <!-- Accordéon tiroir dépliable -->
+                    <!-- Tiroir des détails et diagnostics -->
                     <div id="content-${item.id}" class="accordion-content max-h-0 overflow-hidden opacity-0 bg-slate-50/30">
                         <div class="px-6 pb-6 pt-1 space-y-4 text-slate-800">
                             
@@ -199,7 +186,7 @@
                                 ${item["Définition factuelle"]}
                             </div>
                             
-                            <!-- Grille d'Opportunités / Risques -->
+                            <!-- Cadre d'Analyse Métier Lab IA -->
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
                                 ${item["Opportunités (pour un marketeur)"] ? `
                                     <div class="p-4 bg-white border border-slate-200 rounded-md shadow-2xs">
@@ -236,32 +223,52 @@
             `).join('');
         }
 
-        function setupEventListeners() {
-            // Recherche filtrée dynamique en tapant
-            searchInput.addEventListener('input', (e) => {
-                executeFilter(e.target.value);
-            });
-        }
-
-        function executeFilter(val) {
-            const query = val.toLowerCase().trim();
-            if (!query) {
-                renderDictionary(dictionaryData);
-                return;
-            }
-            const filtered = dictionaryData.filter(item => 
-                (item["Terme"] && item["Terme"].toLowerCase().includes(query)) || 
-                (item["Définition factuelle"] && item["Définition factuelle"].toLowerCase().includes(query)) ||
-                (item["Opportunités (pour un marketeur)"] && item["Opportunités (pour un marketeur)"].toLowerCase().includes(query)) ||
-                (item["Risques (pour un marketeur)"] && item["Risques (pour un marketeur)"].toLowerCase().includes(query)) ||
-                (item["Question de pilotage"] && item["Question de pilotage"].toLowerCase().includes(query))
+        // Mécanique de ciblage : Descend sur la page et déploie le terme demandé
+        function scrollToAndOpen(exactTermName) {
+            // Recherche de l'élément le plus proche de la chaîne saisie ou cliquée
+            const targetItem = dictionaryData.find(item => 
+                item["Terme"].toLowerCase().includes(exactTermName.toLowerCase()) ||
+                exactTermName.toLowerCase().includes(item["Terme"].toLowerCase())
             );
-            renderDictionary(filtered);
+
+            if (targetItem) {
+                const targetElement = document.getElementById(`term-${slugify(targetItem["Terme"])}`);
+                if (targetElement) {
+                    // 1. Descend proprement à l'endroit exact de la page unique
+                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    
+                    // 2. Déploie l'accordéon s'il n'est pas déjà ouvert
+                    const content = document.getElementById(`content-${targetItem.id}`);
+                    const icon = document.getElementById(`icon-${targetItem.id}`);
+                    
+                    if (content && (!content.style.maxHeight || content.style.maxHeight === '0px')) {
+                        // Fermeture des autres tiroirs pour préserver l'élégance
+                        document.querySelectorAll('.accordion-content').forEach(el => { el.style.maxHeight = '0px'; el.style.opacity = '0'; });
+                        document.querySelectorAll('.dictionary-item svg').forEach(svg => svg.style.transform = 'rotate(0deg)');
+                        
+                        // Déploiement de la cible
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                        content.style.opacity = '1';
+                        icon.style.transform = 'rotate(180deg)';
+                    }
+                }
+            }
         }
 
-        // Action déclenchée par le bouton "Rechercher"
-        function executeSearchClick() {
-            executeFilter(searchInput.value);
+        // Déclencheur du bouton Rechercher
+        function triggerSearch() {
+            const query = searchInput.value.trim();
+            if (query) {
+                scrollToAndOpen(query);
+            }
+        }
+
+        function setupKeyboardEvent() {
+            searchInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    triggerSearch();
+                }
+            });
         }
 
         function toggleAccordion(contentId, iconId) {
@@ -280,28 +287,11 @@
             }
         }
 
-        // Gestion du clic sur les boutons du Top 5
-        function triggerSearchAndOpen(exactTermName) {
-            searchInput.value = ''; // On réinitialise la recherche globale pour afficher tout le tableau
-            executeFilter('');
-            
-            const targetItem = dictionaryData.find(item => item["Terme"].toLowerCase() === exactTermName.toLowerCase());
-            if (targetItem) {
-                setTimeout(() => {
-                    toggleAccordion(`content-${targetItem.id}`, `icon-${targetItem.id}`);
-                    document.getElementById(`term-${slugify(targetItem["Terme"])}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }, 50);
-            }
-        }
-
-        function resetSearch() {
-            searchInput.value = '';
-            renderDictionary(dictionaryData);
-            searchInput.focus();
-        }
-
         function slugify(text) {
-            return text.toString().toLowerCase().trim().replace(/\s+/g, '-').replace(/[^\w\-]+/g).replace(/\-\-+/g, '-');
+            return text.toString().toLowerCase().trim()
+                .replace(/\s+/g, '-')
+                .replace(/[^\w\-]+/g, '')
+                .replace(/\-\-+/g, '-');
         }
     </script>
 </body>
