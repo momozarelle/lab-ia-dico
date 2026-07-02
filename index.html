@@ -12,15 +12,15 @@
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <!-- Supabase JS Client CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <!-- Google Fonts - Alliance Inter (Moderne) & Playfair Display (Plume/Calligraphique) -->
+    <!-- Google Fonts - Alliance Inter (Moderne) & Playfair Display (Calligraphique Plume) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2 family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,400;1,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet">
     
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #fbfbfa;
+            background-color: #fbfbfa; /* Fond mat minimaliste style Claude/Anthropic */
             color: #191919;
         }
         .font-serif-plume {
@@ -34,11 +34,10 @@
 </head>
 <body class="min-h-screen selection:bg-stone-200 selection:text-stone-900">
 
-    <!-- Header Épuré -->
+    <!-- Header Minimaliste (Logo aux couleurs d'origine conservé) -->
     <header class="border-b border-stone-200/60 bg-[#fbfbfa] sticky top-0 z-50">
         <div class="max-w-3xl mx-auto px-6 h-24 flex items-center justify-between">
             <div class="flex items-center">
-                <!-- Logo restauré dans ses couleurs bleues d'origine -->
                 <img 
                     src="https://goviudqrftefrnrdamxk.supabase.co/storage/v1/object/public/Visuels%20Lab%20IA/logo%20lab%20IA.png" 
                     alt="Logo Le Lab IA ADETEM" 
@@ -65,8 +64,8 @@
         <!-- Section Top 5 Raccourcis Minimalistes -->
         <section class="mb-10 p-5 rounded-xl bg-white border border-stone-200/60 shadow-2xs">
             <h2 class="text-xs font-mono tracking-wider text-stone-400 uppercase mb-3 flex items-center">
-                <!-- Pictogramme flèche ascendante restauré -->
-                <svg class="w-3.5 h-3.5 mr-2 text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <!-- Pictogramme flèche montante demandé -->
+                <svg class="w-3.5 h-3.5 mr-2 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
                 </svg>
                 Les termes les plus recherchés
@@ -117,7 +116,7 @@
                 <span>Ajouter un nouveau mot</span>
             </button>
 
-            <!-- Formulaire d'ajout -->
+            <!-- Formulaire d'ajout (Nomenclature exacte des champs mise en conformité) -->
             <div id="add-word-form-container" class="mt-4 bg-white border border-stone-200 rounded-xl p-6 shadow-3xs max-h-0 overflow-hidden opacity-0 transition-all duration-300 ease-in-out">
                 <div class="grid grid-cols-1 gap-4 text-xs tracking-wide">
                     <div>
@@ -197,7 +196,7 @@
         function renderTrendingHeader() {
             const trendingItems = dictionaryData.filter(item => item.is_trending).slice(0, 5);
             if (trendingItems.length === 0) {
-                trendingContainer.innerHTML = `<span class="text-xs text-stone-400 font-light italic">Aucun mot favori sélectionné. Utilisez l'étoile d'un mot ci-dessous pour piloter ce Top 5.</span>`;
+                trendingContainer.innerHTML = `<span class="text-xs text-stone-400 font-light italic">Aucun favori sélectionné. Utilisez l'étoile d'un mot ci-dessous pour piloter ce Top 5.</span>`;
                 return;
             }
             trendingContainer.innerHTML = trendingItems.map(item => `
@@ -220,16 +219,298 @@
                             </span>
                         </button>
                         
-                        <!-- Actions Linéaires Fines -->
+                        <!-- Actions Linéaires Fines (Zéro couleur criarde, monochrome monochrome épuré) -->
                         <div class="flex items-center space-x-1">
-                            <!-- Bouton Étoile Pilotage Top 5 -->
+                            <!-- Étoile Favoris -->
                             <button type="button" onclick="toggleTrendingState('${item.id}', ${item.is_trending})" class="p-2 rounded-md hover:bg-stone-50 text-sm cursor-pointer select-none transition-all" title="Piloter le Top 5">
-                                ${item.is_trending ? '<span class="text-amber-500">★</span>' : '<span class="text-stone-300 hover:text-stone-500">☆</span>'}
+                                ${item.is_trending ? '<span class="text-stone-900">★</span>' : '<span class="text-stone-300 hover:text-stone-500">☆</span>'}
                             </button>
-                            <!-- Bouton Modifier (Icône Crayon Fline) -->
+                            <!-- Modifier (Crayon épuré) -->
                             <button type="button" onclick="enableInlineEdit('${item.id}')" class="p-2 rounded-md hover:bg-stone-50 text-stone-400 hover:text-stone-900 transition-all cursor-pointer" title="Modifier">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
                             </button>
-                            <!-- Bouton Supprimer (Icône Corbeille) -->
+                            <!-- Supprimer (Corbeille épurée) -->
                             <button type="button" onclick="deleteWord('${item.id}', '${item.term.replace(/'/g, "\\'")}')" class="p-2 rounded-md hover:bg-stone-50 text-stone-300 hover:text-stone-900 transition-all cursor-pointer" title="Supprimer">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-1Normally I can help with things like this, but I don't seem to have access to that content. You can try again or ask me for something else.
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                            </button>
+                            <!-- Flèche déploiement -->
+                            <button type="button" onclick="toggleAccordion('content-${item.id}', 'icon-${item.id}')" class="p-1 cursor-pointer">
+                                <svg id="icon-${item.id}" class="w-3.5 h-3.5 text-stone-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Tiroir Accordéon -->
+                    <div id="content-${item.id}" class="accordion-content max-h-0 overflow-hidden opacity-0 bg-stone-50/20">
+                        
+                        <!-- Vue Lecture standard -->
+                        <div class="px-6 pb-6 pt-4 space-y-4 text-stone-800" id="view-mode-${item.id}">
+                            <div class="text-sm leading-relaxed text-stone-600 font-light border-b border-stone-100 pb-4">
+                                ${item.definition || '<em class="text-stone-400">Aucune définition renseignée.</em>'}
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+                                <div class="p-4 bg-white border border-stone-200/60 rounded-lg">
+                                    <div class="text-[10px] font-mono uppercase tracking-wider text-stone-400 mb-1.5">Enjeux & Opportunités</div>
+                                    <p class="text-xs text-stone-600 font-light leading-relaxed">${item.opportunities || 'N/A'}</p>
+                                </div>
+                                <div class="p-4 bg-white border border-stone-200/60 rounded-lg">
+                                    <div class="text-[10px] font-mono uppercase tracking-wider text-stone-400 mb-1.5">Facteurs de Risque</div>
+                                    <p class="text-xs text-stone-600 font-light leading-relaxed">${item.risks || 'N/A'}</p>
+                                </div>
+                            </div>
+                            ${item.management_questions ? `
+                                <div class="p-4 bg-stone-950 text-white rounded-lg mt-2">
+                                    <div class="text-[9px] font-mono uppercase tracking-widest text-stone-400 mb-1">Question de pilotage managérial</div>
+                                    <p class="text-xs font-light leading-relaxed opacity-95">${item.management_questions}</p>
+                                </div>
+                            ` : ''}
+                        </div>
+
+                        <!-- Vue Édition Alignée (max-h et overflow purgés de tout blocage) -->
+                        <div class="px-6 pb-6 pt-4 space-y-4 text-stone-800 hidden" id="edit-mode-${item.id}">
+                            <div class="space-y-4 text-xs tracking-wide">
+                                <div>
+                                    <label class="block font-medium text-stone-400 uppercase mb-1">Nom du mot (Titre)</label>
+                                    <input type="text" id="edit-term-${item.id}" value="${item.term || ''}" class="w-full p-2.5 bg-white border border-stone-200 rounded-md focus:outline-hidden focus:border-stone-400 text-sm font-medium">
+                                </div>
+                                <div>
+                                    <label class="block font-medium text-stone-400 uppercase mb-1">Définition factuelle</label>
+                                    <textarea id="edit-def-${item.id}" rows="3" class="w-full p-2.5 bg-white border border-stone-200 rounded-md focus:outline-hidden focus:border-stone-400 text-sm font-light">${item.definition || ''}</textarea>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block font-medium text-stone-400 uppercase mb-1">Enjeux & Opportunités</label>
+                                        <textarea id="edit-opp-${item.id}" rows="3" class="w-full p-2.5 bg-white border border-stone-200 rounded-md focus:outline-hidden focus:border-stone-400 text-sm font-light">${item.opportunities || ''}</textarea>
+                                    </div>
+                                    <div>
+                                        <label class="block font-medium text-stone-400 uppercase mb-1">Facteurs de Risque</label>
+                                        <textarea id="edit-risk-${item.id}" rows="3" class="w-full p-2.5 bg-white border border-stone-200 rounded-md focus:outline-hidden focus:border-stone-400 text-sm font-light">${item.risks || ''}</textarea>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block font-medium text-stone-400 uppercase mb-1">Question de pilotage managérial</label>
+                                    <input type="text" id="edit-ques-${item.id}" value="${item.management_questions || ''}" class="w-full p-2.5 bg-white border border-stone-200 rounded-md focus:outline-hidden focus:border-stone-400 text-sm font-light">
+                                </div>
+                                <div class="flex items-center space-x-2 pt-2">
+                                    <button type="button" onclick="saveInlineEdit('${item.id}')" class="px-4 py-2 bg-stone-950 text-white font-medium rounded-md hover:bg-stone-800 cursor-pointer">Enregistrer</button>
+                                    <button type="button" onclick="disableInlineEdit('${item.id}')" class="px-4 py-2 bg-stone-100 text-stone-600 rounded-md hover:bg-stone-200 cursor-pointer">Annuler</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function toggleTrendingState(id, currentState) {
+            const newState = !currentState;
+            try {
+                const { error } = await supabaseClient
+                    .from('dictionary')
+                    .update({ is_trending: newState })
+                    .eq('id', id);
+
+                if (error) throw error;
+
+                const idx = dictionaryData.findIndex(item => item.id === id);
+                if (idx !== -1) dictionaryData[idx].is_trending = newState;
+
+                sortAndRenderAll();
+            } catch (error) {
+                alert("Erreur Supabase Favoris : " + error.message);
+            }
+        }
+
+        function enableInlineEdit(id) {
+            const content = document.getElementById(`content-${id}`);
+            const icon = document.getElementById('icon-' + id);
+            if (content) {
+                content.style.maxHeight = "none"; 
+                content.style.opacity = "1";
+                content.classList.remove("overflow-hidden");
+                if (icon) icon.style.transform = 'rotate(180deg)';
+            }
+            document.getElementById(`view-mode-${id}`).classList.add('hidden');
+            document.getElementById(`edit-mode-${id}`).classList.remove('hidden');
+        }
+
+        function disableInlineEdit(id) {
+            document.getElementById(`view-mode-${id}`).classList.remove('hidden');
+            document.getElementById(`edit-mode-${id}`).classList.add('hidden');
+            
+            const content = document.getElementById(`content-${id}`);
+            if (content) {
+                content.classList.add("overflow-hidden");
+                content.style.maxHeight = content.scrollHeight + 'px';
+            }
+        }
+
+        async function saveInlineEdit(id) {
+            const term = document.getElementById(`edit-term-${id}`).value.trim();
+            const definition = document.getElementById(`edit-def-${id}`).value.trim();
+            const opportunities = document.getElementById(`edit-opp-${id}`).value.trim();
+            const risks = document.getElementById(`edit-risk-${id}`).value.trim();
+            const management_questions = document.getElementById(`edit-ques-${id}`).value.trim();
+
+            if (!term) {
+                alert("Le nom du mot est obligatoire.");
+                return;
+            }
+
+            try {
+                const { error } = await supabaseClient
+                    .from('dictionary')
+                    .update({ term, definition, opportunities, risks, management_questions })
+                    .eq('id', id);
+
+                if (error) throw error;
+
+                const idx = dictionaryData.findIndex(item => item.id === id);
+                if (idx !== -1) {
+                    dictionaryData[idx].term = term;
+                    dictionaryData[idx].definition = definition;
+                    dictionaryData[idx].opportunities = opportunities;
+                    dictionaryData[idx].risks = risks;
+                    dictionaryData[idx].management_questions = management_questions;
+                }
+
+                sortAndRenderAll();
+                disableInlineEdit(id);
+            } catch (error) {
+                alert("Erreur Supabase Enregistrement : " + error.message);
+            }
+        }
+
+        async function deleteWord(id, termName) {
+            const confirmed = confirm(`Voulez-vous vraiment supprimer le mot "${termName}" ?`);
+            if (!confirmed) return;
+
+            try {
+                const { error } = await supabaseClient.from('dictionary').delete().eq('id', id);
+                if (error) throw error;
+
+                dictionaryData = dictionaryData.filter(item => item.id !== id);
+                sortAndRenderAll();
+            } catch (error) {
+                alert("Erreur lors de la suppression : " + error.message);
+            }
+        }
+
+        function toggleAddForm() {
+            if (!addWordFormContainer) return;
+            if (addWordFormContainer.style.maxHeight && addWordFormContainer.style.maxHeight !== '0px') {
+                addWordFormContainer.style.maxHeight = '0px';
+                addWordFormContainer.style.opacity = '0';
+            } else {
+                addWordFormContainer.style.maxHeight = '1000px';
+                addWordFormContainer.style.opacity = '1';
+                const newTermInput = document.getElementById('new-term');
+                if (newTermInput) newTermInput.focus();
+            }
+        }
+
+        async function createWord() {
+            const term = document.getElementById('new-term').value.trim();
+            const definition = document.getElementById('new-definition').value.trim();
+            const opportunities = document.getElementById('new-opportunities').value.trim();
+            const risks = document.getElementById('new-risks').value.trim();
+            const management_questions = document.getElementById('new-questions').value.trim();
+
+            if (!term || !definition) {
+                alert("Le nom du mot et la définition factuelle sont obligatoires.");
+                return;
+            }
+
+            try {
+                const { data, error } = await supabaseClient
+                    .from('dictionary')
+                    .insert([{ term, definition, opportunities, risks, management_questions }])
+                    .select();
+
+                if (error) throw error;
+                if (data && data[0]) dictionaryData.push(data[0]);
+                
+                sortAndRenderAll();
+                toggleAddForm(); 
+                
+                document.getElementById('new-term').value = '';
+                document.getElementById('new-definition').value = '';
+                document.getElementById('new-opportunities').value = '';
+                document.getElementById('new-risks').value = '';
+                document.getElementById('new-questions').value = '';
+
+                setTimeout(() => { scrollToAndOpen(term); }, 300);
+            } catch (error) {
+                alert("Erreur lors de l'ajout : " + error.message);
+            }
+        }
+
+        function scrollToAndOpen(exactTermName) {
+            const targetItem = dictionaryData.find(item => 
+                item.term.toLowerCase().includes(exactTermName.toLowerCase()) ||
+                exactTermName.toLowerCase().includes(item.term.toLowerCase())
+            );
+
+            if (targetItem) {
+                const targetElement = document.getElementById(`term-${slugify(targetItem.term)}`);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    
+                    const content = document.getElementById(`content-${targetItem.id}`);
+                    const icon = document.getElementById(`icon-${targetItem.id}`);
+                    
+                    if (content && (!content.style.maxHeight || content.style.maxHeight === '0px')) {
+                        document.querySelectorAll('.accordion-content').forEach(el => { el.style.maxHeight = '0px'; el.style.opacity = '0'; });
+                        document.querySelectorAll('.dictionary-item svg').forEach(svg => svg.style.transform = 'rotate(0deg)');
+                        
+                        content.style.maxHeight = '2000px'; 
+                        content.style.opacity = '1';
+                        if (icon) icon.style.transform = 'rotate(180deg)';
+                    }
+                }
+            }
+        }
+
+        function triggerSearch() {
+            if (searchInput) {
+                const query = searchInput.value.trim();
+                if (query) { scrollToAndOpen(query); }
+            }
+        }
+
+        function setupKeyboardEvent() {
+            if (searchInput) {
+                searchInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') { triggerSearch(); }
+                });
+            }
+        }
+
+        function toggleAccordion(contentId, iconId) {
+            const content = document.getElementById(contentId);
+            const icon = document.getElementById(iconId);
+            if (!content || !icon) return;
+            
+            if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+                content.style.maxHeight = '0px';
+                content.style.opacity = '0';
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                document.querySelectorAll('.accordion-content').forEach(el => { el.style.maxHeight = '0px'; el.style.opacity = '0'; });
+                document.querySelectorAll('.dictionary-item svg').forEach(svg => svg.style.transform = 'rotate(0deg)');
+                content.style.maxHeight = content.scrollHeight + "px";
+                content.style.opacity = '1';
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        function slugify(text) {
+            return text.toString().toLowerCase().trim()
+                .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/[^\w\-]+/g, '')
+                .replace(/\-\-+/g, '-');
+        }
+    </script>
+</body>
+</html>
