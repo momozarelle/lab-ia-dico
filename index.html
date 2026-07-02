@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Les Mots de l'IA — Le Lab IA</title>
+    <!-- Tailwind CSS v4 CDN -->
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <!-- Supabase JS Client CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Google Fonts Éditioriales -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fbfbfa;
+            color: #191919;
+        }
+        .serif-title {
+            font-family: 'Instrument Serif', serif;
+        }
+        .accordion-content {
+            transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease-in-out;
+        }
+    </style>
+</head>
+<body class="min-h-screen selection:bg-stone-200 selection:text-stone-900">
+
+    <!-- Header / Navigation Épurée -->
+    <header class="border-b border-stone-200/60 bg-[#fbfbfa]/80 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <span class="text-sm font-semibold tracking-wider uppercase text-stone-500">Le Lab IA</span>
+                <span class="text-stone-300">/</span>
+                <span class="text-sm font-medium text-stone-800">Les Mots de l'IA</span>
+            </div>
+            <div class="text-xs text-stone-400 font-mono">Lecture seule</div>
+        </div>
+    </header>
+
+    <!-- Conteneur Principal -->
+    <main class="max-w-4xl mx-auto px-6 py-12 md:py-20">
+        
+        <!-- Hero Section -->
+        <section class="mb-12 md:mb-16">
+            <h1 class="serif-title text-6xl md:text-7xl font-normal tracking-tight text-stone-900 mb-4">
+                Les Mots de l'IA.
+            </h1>
+            <p class="text-stone-500 text-lg md:text-xl font-light max-w-xl leading-relaxed">
+                Un dictionnaire interactif et pragmatique pour comprendre les enjeux, piloter les systèmes et saisir les opportunités de l'intelligence artificielle.
+            </p>
+        </section>
+
+        <!-- Section Top 5 / Tendances -->
+        <section class="mb-12 p-6 rounded-2xl bg-stone-100/60 border border-stone-200/40">
+            <h2 class="text-xs font-semibold uppercase tracking-widest text-stone-400 mb-3 flex items-center">
+                <svg class="w-3 h-3 mr-1.5 text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                </svg>
+                Les 5 termes les plus recherchés
+            </h2>
+            <div id="trending-container" class="flex flex-wrap gap-2">
+                <span class="text-sm text-stone-400 animate-pulse">Chargement des tendances...</span>
+            </div>
+        </section>
+
+        <!-- Barre de Recherche Universelle -->
+        <section class="mb-10 sticky top-20 z-40">
+            <div class="relative group">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-stone-400 group-focus-within:text-stone-600 transition-colors">
+                    <svg class="w-5 h-5 stroke-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </div>
+                <input 
+                    type="text" 
+                    id="search-input" 
+                    placeholder="Rechercher un terme, un concept, une définition..." 
+                    class="w-full pl-12 pr-4 py-4 bg-[#fbfbfa] border border-stone-200 rounded-xl shadow-xs text-stone-900 placeholder-stone-400 focus:outline-hidden focus:ring-1 focus:ring-stone-400 focus:border-stone-400 transition-all text-base md:text-lg"
+                />
+                <div id="search-count" class="absolute inset-y-0 right-0 pr-4 flex items-center text-xs text-stone-400 pointer-events-none font-mono"></div>
+            </div>
+        </section>
+
+        <!-- Liste Principale du Dictionnaire -->
+        <section>
+            <!-- État de chargement -->
+            <div id="loading-state" class="py-12 text-center text-stone-400 font-light">
+                <div class="inline-block animate-spin rounded-full h-6 w-6 border-2 border-stone-300 border-t-stone-600 mb-2"></div>
+                <div>Synchronisation avec la base de connaissances du Lab IA...</div>
+            </div>
+
+            <!-- État vide -->
+            <div id="empty-state" class="hidden py-16 text-center border border-dashed border-stone-200 rounded-xl bg-stone-50/50">
+                <p class="text-stone-400 font-light text-base">Aucun terme ne correspond à votre recherche.</p>
+                <button onclick="resetSearch()" class="mt-2 text-xs text-stone-600 underline underline-offset-4 hover:text-stone-900 transition-colors">Réinitialiser le filtre</button>
+            </div>
+
+            <!-- Conteneur des Mots -->
+            <div id="dictionary-list" class="divide-y divide-stone-200/60 border-t border-b border-stone-200/60"></div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="max-w-4xl mx-auto px-6 py-12 border-t border-stone-200/40 text-center text-xs text-stone-400 font-mono tracking-wide">
+        &copy; 2026 Le Lab IA. Édition et mise à jour continues.
+    </footer>
+
+    <!-- Script de Logique & Connexion Supabase -->
+    <script>
+        const SUPABASE_URL = 'https://goviudqrftefrnrdamxk.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdvdml1ZHFyZnRlZnJucmRhbXhrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI5MTYxOTYsImV4cCI6MjA5ODQ5MjE5Nn0.BnjHGjgCD3uVch5kT2FyRiGXzAVM9k6rMpq4p2Hhci4';
+
+        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        let dictionaryData = [];
+
+        const searchInput = document.getElementById('search-input');
+        const dictionaryList = document.getElementById('dictionary-list');
+        const searchCount = document.getElementById('search-count');
+        const loadingState = document.getElementById('loading-state');
+        const emptyState = document.getElementById('empty-state');
+        const trendingContainer = document.getElementById('trending-container');
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            await fetchDictionaryData();
+            setupEventListeners();
+        });
+
+        async function fetchDictionaryData() {
+            try {
+                const { data, error } = await supabase
+                    .from('dictionary')
+                    .select('*')
+                    .order('Terme', { ascending: true });
+
+                if (error) throw error;
+
+                // Nettoyage automatique à l'affichage pour écarter les lignes vides du tableur source
+                dictionaryData = (data || []).filter(item => item["Terme"] && item["Définition factuelle"]);
+                
+                loadingState.classList.add('hidden');
+                
+                renderTrending();
+                renderDictionary(dictionaryData);
+
+            } catch (error) {
+                console.error('Erreur Supabase Fetch:', error.message);
+                loadingState.innerHTML = `
+                    <div class="text-red-500 font-medium">Échec de synchronisation avec la base de données.</div>
+                    <div class="text-xs text-stone-400 mt-1">${error.message}</div>
+                `;
+            }
+        }
+
+        function renderTrending() {
+            const trendingItems = dictionaryData.filter(item => item.is_trending).slice(0, 5);
+            const finalTrending = trendingItems.length > 0 ? trendingItems : dictionaryData.slice(0, 5);
+
+            if (finalTrending.length === 0) {
+                trendingContainer.innerHTML = `<span class="text-xs text-stone-400 font-light">Aucun mot disponible.</span>`;
+                return;
+            }
+
+            trendingContainer.innerHTML = finalTrending.map(item => `
+                <button 
+                    onclick="triggerSearchAndOpen('${item["Terme"].replace(/'/g, "\\'")}')"
+                    class="px-3 py-1.5 text-xs font-medium bg-[#fbfbfa] text-stone-700 border border-stone-200 rounded-full hover:border-stone-400 hover:text-stone-900 transition-all cursor-pointer shadow-2xs"
+                >
+                    ${item["Terme"]}
+                </button>
+            `).join('');
+        }
+
+        function renderDictionary(data) {
+            if (data.length === 0) {
+                dictionaryList.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                searchCount.textContent = '0 terme';
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            searchCount.textContent = `${data.length} ${data.length > 1 ? 'termes' : 'terme'}`;
+
+            dictionaryList.innerHTML = data.map(item => `
+                <div class="dictionary-item py-4 group" id="term-${slugify(item["Terme"])}">
+                    <button 
+                        onclick="toggleAccordion('content-${item.id}', 'icon-${item.id}')"
+                        class="w-full flex items-center justify-between text-left py-2 cursor-pointer focus:outline-hidden"
+                    >
+                        <span class="text-xl font-medium text-stone-900 group-hover:text-stone-600 transition-colors tracking-tight">
+                            ${item["Terme"]}
+                        </span>
+                        <div class="flex items-center space-x-2">
+                            ${item.is_trending ? '<span class="text-[10px] font-mono tracking-wider bg-stone-100 text-stone-500 px-2 py-0.5 rounded-xs uppercase">Top 5</span>' : ''}
+                            <svg 
+                                id="icon-${item.id}"
+                                class="w-5 h-5 text-stone-400 transform transition-transform duration-300 ease-in-out group-hover:text-stone-600" 
+                                fill="none" 
+                                stroke="currentColor" 
+                                viewBox="0 0 24 24"
+                            >
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v16m8-8H4"></path>
+                            </svg>
+                        </div>
+                    </button>
+
+                    <div id="content-${item.id}" class="accordion-content max-h-0 overflow-hidden opacity-0">
+                        <div class="pt-2 pb-4 space-y-4 text-stone-800">
+                            <div class="text-base leading-relaxed font-light text-stone-700">
+                                ${item["Définition factuelle"]}
+                            </div>
+                            
+                            <div class="p-5 rounded-xl bg-stone-100 border-l border-stone-400 mt-2 space-y-3 text-sm">
+                                <div class="text-xs font-semibold uppercase tracking-wider text-stone-500 font-mono">
+                                    Analyse de Pilotage — Le Lab IA
+                                </div>
+                                ${item["Opportunités (pour un marketeur)"] ? `<div><strong class="text-stone-900">⚡ Opportunités :</strong> ${item["Opportunités (pour un marketeur)"]}</div>` : ''}
+                                ${item["Risques (pour un marketeur)"] ? `<div><strong class="text-stone-900">⚠️ Risques :</strong> ${item["Risques (pour un marketeur)"]}</div>` : ''}
+                                ${item["Question de pilotage"] ? `<div class="pt-1 text-stone-600 italic">👉 ${item["Question de pilotage"]}</div>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function setupEventListeners() {
+            searchInput.addEventListener('input', (e) => {
+                const query = e.target.value.toLowerCase().trim();
+                if (!query) {
+                    renderDictionary(dictionaryData);
+                    return;
+                }
+                const filtered = dictionaryData.filter(item => 
+                    (item["Terme"] && item["Terme"].toLowerCase().includes(query)) || 
+                    (item["Définition factuelle"] && item["Définition factuelle"].toLowerCase().includes(query)) ||
+                    (item["Opportunités (pour un marketeur)"] && item["Opportunités (pour un marketeur)"].toLowerCase().includes(query)) ||
+                    (item["Risques (pour un marketeur)"] && item["Risques (pour un marketeur)"].toLowerCase().includes(query))
+                );
+                renderDictionary(filtered);
+            });
+        }
+
+        function toggleAccordion(contentId, iconId) {
+            const content = document.getElementById(contentId);
+            const icon = document.getElementById(iconId);
+            if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+                content.style.maxHeight = '0px';
+                content.style.opacity = '0';
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                document.querySelectorAll('.accordion-content').forEach(el => { el.style.maxHeight = '0px'; el.style.opacity = '0'; });
+                document.querySelectorAll('.dictionary-item svg').forEach(svg => svg.style.transform = 'rotate(0deg)');
+                content.style.maxHeight = content.scrollHeight + 'px';
+                content.style.opacity = '1';
+                icon.style.transform = 'rotate(45deg)';
+            }
+        }
+
+        function triggerSearchAndOpen(termName) {
+            searchInput.value = termName;
+            searchInput.dispatchEvent(new Event('input'));
+            const targetItem = dictionaryData.find(item => item["Terme"].toLowerCase() === termName.toLowerCase());
+            if (targetItem) {
+                setTimeout(() => {
+                    toggleAccordion(`content-${targetItem.id}`, `icon-${targetItem.id}`);
+                    document.getElementById(`term-${slugify(targetItem["Terme"])}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 50);
+            }
+        }
+
+        function resetSearch() {
+            searchInput.value = '';
+            renderDictionary(dictionaryData);
+            searchInput.focus();
+        }
+
+        function slugify(text) {
+            return text.toString().toLowerCase().trim().replace(/\s+/g, '-').replace(/[^\w\-]+/g, '').replace(/\-\-+/g, '-');
+        }
+    </script>
+</body>
+</html>
