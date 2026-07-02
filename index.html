@@ -15,12 +15,12 @@
     <!-- Google Fonts - Alliance Inter (Moderne) & Playfair Display (Plume/Calligraphique) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,400;1,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2 family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,400;1,500&display=swap" rel="stylesheet">
     
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #fbfbfa; /* Blanc cassé type Claude */
+            background-color: #fbfbfa;
             color: #191919;
         }
         .font-serif-plume {
@@ -34,14 +34,17 @@
 </head>
 <body class="min-h-screen selection:bg-stone-200 selection:text-stone-900">
 
-    <!-- Header Minimaliste -->
+    <!-- Header Épuré -->
     <header class="border-b border-stone-200/60 bg-[#fbfbfa] sticky top-0 z-50">
-        <div class="max-w-3xl mx-auto px-6 h-20 flex items-center justify-between">
-            <img 
-                src="https://goviudqrftefrnrdamxk.supabase.co/storage/v1/object/public/Visuels%20Lab%20IA/logo%20lab%20IA.png" 
-                alt="Logo Le Lab IA ADETEM" 
-                class="h-16 w-auto object-contain grayscale opacity-90"
-            />
+        <div class="max-w-3xl mx-auto px-6 h-24 flex items-center justify-between">
+            <div class="flex items-center">
+                <!-- Logo restauré dans ses couleurs bleues d'origine -->
+                <img 
+                    src="https://goviudqrftefrnrdamxk.supabase.co/storage/v1/object/public/Visuels%20Lab%20IA/logo%20lab%20IA.png" 
+                    alt="Logo Le Lab IA ADETEM" 
+                    class="h-16 w-auto object-contain"
+                />
+            </div>
             <span class="text-[11px] font-mono tracking-wider text-stone-400 uppercase">Version collaborative interne</span>
         </div>
     </header>
@@ -52,25 +55,28 @@
         <!-- Hero Section -->
         <section class="mb-12 border-b border-stone-200/60 pb-10">
             <h1 class="text-4xl md:text-5xl font-normal text-stone-950 tracking-tight mb-3 font-serif-plume">
-                Les mots de l'IA
+                Les mots de l'IA.
             </h1>
             <p class="text-stone-500 text-base md:text-lg font-light leading-relaxed">
                 Glossaire interactif de l'IA pour le marketing. Version collaborative interne connectée en temps réel.
             </p>
         </section>
 
-        <!-- Section Top 5 Raccourcis Épurés -->
-        <section class="mb-10 p-5 rounded-xl bg-white border border-stone-200/60 shadow-xs">
-            <h2 class="text-xs font-mono tracking-wider text-stone-400 uppercase mb-3">Les termes les plus recherchés</h2>
+        <!-- Section Top 5 Raccourcis Minimalistes -->
+        <section class="mb-10 p-5 rounded-xl bg-white border border-stone-200/60 shadow-2xs">
+            <h2 class="text-xs font-mono tracking-wider text-stone-400 uppercase mb-3 flex items-center">
+                <!-- Pictogramme flèche ascendante restauré -->
+                <svg class="w-3.5 h-3.5 mr-2 text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                </svg>
+                Les termes les plus recherchés
+            </h2>
             <div id="trending-container" class="flex flex-wrap gap-2">
-                <button type="button" onclick="scrollToAndOpen('IAG')" class="px-3 py-1.5 text-xs bg-stone-50 text-stone-600 border border-stone-200/60 rounded-md hover:bg-stone-950 hover:text-white hover:border-stone-950 transition-all cursor-pointer">IAG</button>
-                <button type="button" onclick="scrollToAndOpen('Large Language Model')" class="px-3 py-1.5 text-xs bg-stone-50 text-stone-600 border border-stone-200/60 rounded-md hover:bg-stone-950 hover:text-white hover:border-stone-950 transition-all cursor-pointer">Large Language Model</button>
-                <button type="button" onclick="scrollToAndOpen('Prompt')" class="px-3 py-1.5 text-xs bg-stone-50 text-stone-600 border border-stone-200/60 rounded-md hover:bg-stone-950 hover:text-white hover:border-stone-950 transition-all cursor-pointer">Prompt Engineering</button>
-                <button type="button" onclick="scrollToAndOpen('Hallucination')" class="px-3 py-1.5 text-xs bg-stone-50 text-stone-600 border border-stone-200/60 rounded-md hover:bg-stone-950 hover:text-white hover:border-stone-950 transition-all cursor-pointer">Hallucinations</button>
+                <span class="text-xs text-stone-400">Chargement des favoris...</span>
             </div>
         </section>
 
-        <!-- Barre de Recherche Épurée Monochrome -->
+        <!-- Barre de Recherche Monochrome -->
         <section class="mb-10 sticky top-24 z-40 bg-[#fbfbfa]/90 backdrop-blur-md py-2">
             <div class="flex items-center gap-2">
                 <div class="relative flex-1">
@@ -78,7 +84,7 @@
                         type="text" 
                         id="search-input" 
                         placeholder="Rechercher un terme, un concept..." 
-                        class="w-full pl-4 pr-4 py-3 bg-white border border-stone-200 rounded-lg shadow-2xs text-stone-900 placeholder-stone-400 focus:outline-hidden focus:border-stone-400 transition-all text-sm"
+                        class="w-full pl-4 pr-4 py-3 bg-white border border-stone-200 rounded-lg shadow-3xs text-stone-900 placeholder-stone-400 focus:outline-hidden focus:border-stone-400 transition-all text-sm"
                     />
                 </div>
                 <button 
@@ -96,44 +102,44 @@
             <div id="loading-state" class="py-12 text-center text-stone-400">
                 <div class="inline-block animate-spin rounded-full h-4 w-4 border-2 border-stone-200 border-t-stone-600"></div>
             </div>
-            <div id="dictionary-list" class="bg-white border border-stone-200/80 rounded-xl shadow-xs divide-y divide-stone-100 overflow-hidden hidden"></div>
+            <div id="dictionary-list" class="bg-white border border-stone-200/80 rounded-xl shadow-3xs divide-y divide-stone-100 overflow-hidden hidden"></div>
         </section>
 
-        <!-- Section d'Ajout d'un Nouveau Mot -->
+        <!-- Section de Création Épurée -->
         <section class="mb-16 border-t border-stone-200/60 pt-8">
             <button 
                 type="button"
                 id="toggle-add-form-btn"
                 onclick="toggleAddForm()" 
-                class="w-full py-3.5 bg-white text-stone-800 font-medium text-sm border border-stone-200 rounded-xl shadow-2xs hover:bg-stone-50 transition-all cursor-pointer flex items-center justify-center space-x-2"
+                class="w-full py-3.5 bg-white text-stone-800 font-medium text-sm border border-stone-200 rounded-xl shadow-3xs hover:bg-stone-50 transition-all cursor-pointer flex items-center justify-center space-x-2"
             >
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                 <span>Ajouter un nouveau mot</span>
             </button>
 
             <!-- Formulaire d'ajout -->
-            <div id="add-word-form-container" class="mt-4 bg-white border border-stone-200 rounded-xl p-6 shadow-2xs max-h-0 overflow-hidden opacity-0 transition-all duration-300 ease-in-out">
+            <div id="add-word-form-container" class="mt-4 bg-white border border-stone-200 rounded-xl p-6 shadow-3xs max-h-0 overflow-hidden opacity-0 transition-all duration-300 ease-in-out">
                 <div class="grid grid-cols-1 gap-4 text-xs tracking-wide">
                     <div>
-                        <label class="block font-medium text-stone-500 uppercase mb-1">Nom du mot</label>
+                        <label class="block font-medium text-stone-400 uppercase mb-1">Nom du mot</label>
                         <input type="text" id="new-term" class="w-full p-2.5 bg-stone-50/50 border border-stone-200 rounded-lg focus:outline-hidden focus:border-stone-400 text-sm">
                     </div>
                     <div>
-                        <label class="block font-medium text-stone-500 uppercase mb-1">Définition factuelle</label>
+                        <label class="block font-medium text-stone-400 uppercase mb-1">Définition factuelle</label>
                         <textarea id="new-definition" rows="3" class="w-full p-2.5 bg-stone-50/50 border border-stone-200 rounded-lg focus:outline-hidden focus:border-stone-400 text-sm"></textarea>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="block font-medium text-stone-500 uppercase mb-1">Enjeux & Opportunités</label>
+                            <label class="block font-medium text-stone-400 uppercase mb-1">Enjeux & Opportunités</label>
                             <textarea id="new-opportunities" rows="3" class="w-full p-2.5 bg-stone-50/50 border border-stone-200 rounded-lg focus:outline-hidden focus:border-stone-400 text-sm"></textarea>
                         </div>
                         <div>
-                            <label class="block font-medium text-stone-500 uppercase mb-1">Facteurs de Risque</label>
+                            <label class="block font-medium text-stone-400 uppercase mb-1">Facteurs de Risque</label>
                             <textarea id="new-risks" rows="3" class="w-full p-2.5 bg-stone-50/50 border border-stone-200 rounded-lg focus:outline-hidden focus:border-stone-400 text-sm"></textarea>
                         </div>
                     </div>
                     <div>
-                        <label class="block font-medium text-stone-500 uppercase mb-1">Question de pilotage managérial</label>
+                        <label class="block font-medium text-stone-400 uppercase mb-1">Question de pilotage managérial</label>
                         <input type="text" id="new-questions" class="w-full p-2.5 bg-stone-50/50 border border-stone-200 rounded-lg focus:outline-hidden focus:border-stone-400 text-sm">
                     </div>
                     <div class="pt-2 flex items-center space-x-2">
@@ -146,8 +152,9 @@
 
     </main>
 
-    <footer class="py-8 text-center text-xs text-stone-400 font-mono"></footer>
+    <footer class="py-8"></footer>
 
+    <!-- Logique Applicative Unifiée -->
     <script>
         const SUPABASE_URL = 'https://goviudqrftefrnrdamxk.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdvdml1ZHFyZnRlZnJucmRhbXhrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI5MTYxOTYsImV4cCI6MjA5ODQ5MjE5Nn0.BnjHGjgCD3uVch5kT2FyRiGXzAVM9k6rMpq4p2Hhci4';
@@ -190,7 +197,7 @@
         function renderTrendingHeader() {
             const trendingItems = dictionaryData.filter(item => item.is_trending).slice(0, 5);
             if (trendingItems.length === 0) {
-                trendingContainer.innerHTML = `<span class="text-xs text-stone-400 font-light italic">Aucun mot favori sélectionné. Cliquez sur l’étoile d’un mot pour piloter cette section.</span>`;
+                trendingContainer.innerHTML = `<span class="text-xs text-stone-400 font-light italic">Aucun mot favori sélectionné. Utilisez l'étoile d'un mot ci-dessous pour piloter ce Top 5.</span>`;
                 return;
             }
             trendingContainer.innerHTML = trendingItems.map(item => `
@@ -214,15 +221,15 @@
                         </button>
                         
                         <!-- Actions Linéaires Fines -->
-                        <div class="flex items-center space-x-1.5">
-                            <!-- Étoile Favorite -->
-                            <button type="button" onclick="toggleTrendingState('${item.id}', ${item.is_trending})" class="p-1.5 rounded-md hover:bg-stone-50 text-sm cursor-pointer select-none transition-all" title="Piloter l'affichage Top 5">
+                        <div class="flex items-center space-x-1">
+                            <!-- Bouton Étoile Pilotage Top 5 -->
+                            <button type="button" onclick="toggleTrendingState('${item.id}', ${item.is_trending})" class="p-2 rounded-md hover:bg-stone-50 text-sm cursor-pointer select-none transition-all" title="Piloter le Top 5">
                                 ${item.is_trending ? '<span class="text-amber-500">★</span>' : '<span class="text-stone-300 hover:text-stone-500">☆</span>'}
                             </button>
-                            <!-- Modifier -->
-                            <button type="button" onclick="enableInlineEdit('${item.id}')" class="p-1.5 rounded-md hover:bg-stone-50 text-stone-400 hover:text-stone-900 transition-all cursor-pointer" title="Modifier le contenu">
+                            <!-- Bouton Modifier (Icône Crayon Fline) -->
+                            <button type="button" onclick="enableInlineEdit('${item.id}')" class="p-2 rounded-md hover:bg-stone-50 text-stone-400 hover:text-stone-900 transition-all cursor-pointer" title="Modifier">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
                             </button>
-                            <!-- Supprimer -->
-                            <button type="button" onclick="deleteWord('${item.id}', '${item.term.replace(/'/g, "\\'")}')" class="p-1.5 rounded-md hover:bg-stone-50 text-stone-300 hover:text-rose-600 transition-all cursor-pointer" title="Supprimer définitivement">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5Normally I can help with things like this, but I don't seem to have access to that content. You can try again or ask me for something else.
+                            <!-- Bouton Supprimer (Icône Corbeille) -->
+                            <button type="button" onclick="deleteWord('${item.id}', '${item.term.replace(/'/g, "\\'")}')" class="p-2 rounded-md hover:bg-stone-50 text-stone-300 hover:text-stone-900 transition-all cursor-pointer" title="Supprimer">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-1Normally I can help with things like this, but I don't seem to have access to that content. You can try again or ask me for something else.
