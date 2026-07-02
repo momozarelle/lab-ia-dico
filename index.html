@@ -5,12 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Les Mots de l'IA — Espace de Co-construction</title>
     
-    <!-- Favicon Officiel (Petit rond bleu) -->
     <link rel="icon" type="image/png" href="https://goviudqrftefrnrdamxk.supabase.co/storage/v1/object/public/Visuels%20Lab%20IA/rond.png">
     
-    <!-- Tailwind CSS v4 CDN -->
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-    <!-- Google Fonts - Typographies Officielles ADETEM -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
@@ -31,7 +29,6 @@
 </head>
 <body class="min-h-screen selection:bg-cyan-500/20 selection:text-cyan-900">
 
-    <!-- Header avec Logo Grand Format -->
     <header class="border-b border-slate-200 bg-white sticky top-0 z-50 shadow-xs">
         <div class="max-w-4xl mx-auto px-6 h-24 flex items-center justify-between">
             <div class="flex items-center">
@@ -47,10 +44,8 @@
         </div>
     </header>
 
-    <!-- Conteneur Principal -->
     <main class="max-w-4xl mx-auto px-6 py-12 md:py-16">
         
-        <!-- Hero Section -->
         <section class="mb-12 border-b border-slate-200 pb-10">
             <h1 class="text-4xl md:text-5xl font-black tracking-tight text-[#002B49] mb-4 uppercase">
                 Les Mots de l'IA
@@ -60,7 +55,6 @@
             </p>
         </section>
 
-        <!-- Section Top 5 Raccourcis -->
         <section class="mb-10 p-5 rounded-lg bg-white border border-slate-200 shadow-xs">
             <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center">
                 <svg class="w-3.5 h-3.5 mr-2 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -69,14 +63,13 @@
                 Les termes les plus recherchés
             </h2>
             <div id="trending-container" class="flex flex-wrap gap-2">
-                <button onclick="scrollToAndOpen('IAG')" class="px-3 py-1.5 text-xs font-bold bg-slate-50 text-slate-700 border border-slate-200 rounded-md hover:bg-cyan-50 hover:border-cyan-200 hover:text-cyan-700 transition-all cursor-pointer">IAG</button>
-                <button onclick="scrollToAndOpen('Large Language Model')" class="px-3 py-1.5 text-xs font-bold bg-slate-50 text-slate-700 border border-slate-200 rounded-md hover:bg-cyan-50 hover:border-cyan-200 hover:text-cyan-700 transition-all cursor-pointer">Large Language Model</button>
-                <button onclick="scrollToAndOpen('Prompt')" class="px-3 py-1.5 text-xs font-bold bg-slate-50 text-slate-700 border border-slate-200 rounded-md hover:bg-cyan-50 hover:border-cyan-200 hover:text-cyan-700 transition-all cursor-pointer">Prompt Engineering</button>
-                <button onclick="scrollToAndOpen('Hallucination')" class="px-3 py-1.5 text-xs font-bold bg-slate-50 text-slate-700 border border-slate-200 rounded-md hover:bg-cyan-50 hover:border-cyan-200 hover:text-cyan-700 transition-all cursor-pointer">Hallucinations</button>
+                <button type="button" onclick="scrollToAndOpen('IAG')" class="px-3 py-1.5 text-xs font-bold bg-slate-50 text-slate-700 border border-slate-200 rounded-md hover:bg-cyan-50 hover:border-cyan-200 hover:text-cyan-700 transition-all cursor-pointer">IAG</button>
+                <button type="button" onclick="scrollToAndOpen('Large Language Model')" class="px-3 py-1.5 text-xs font-bold bg-slate-50 text-slate-700 border border-slate-200 rounded-md hover:bg-cyan-50 hover:border-cyan-200 hover:text-cyan-700 transition-all cursor-pointer">Large Language Model</button>
+                <button type="button" onclick="scrollToAndOpen('Prompt')" class="px-3 py-1.5 text-xs font-bold bg-slate-50 text-slate-700 border border-slate-200 rounded-md hover:bg-cyan-50 hover:border-cyan-200 hover:text-cyan-700 transition-all cursor-pointer">Prompt Engineering</button>
+                <button type="button" onclick="scrollToAndOpen('Hallucination')" class="px-3 py-1.5 text-xs font-bold bg-slate-50 text-slate-700 border border-slate-200 rounded-md hover:bg-cyan-50 hover:border-cyan-200 hover:text-cyan-700 transition-all cursor-pointer">Hallucinations</button>
             </div>
         </section>
 
-        <!-- Barre de Recherche Universelle -->
         <section class="mb-8 sticky top-28 z-40">
             <div class="flex items-center gap-2">
                 <div class="relative flex-1 group">
@@ -93,6 +86,7 @@
                     />
                 </div>
                 <button 
+                    type="button"
                     onclick="triggerSearch()"
                     class="px-6 py-3.5 bg-[#002B49] text-white font-bold text-sm uppercase tracking-wider rounded-lg shadow-sm hover:bg-cyan-800 transition-all cursor-pointer"
                 >
@@ -101,20 +95,17 @@
             </div>
         </section>
 
-        <!-- Liste Principale du Dictionnaire -->
         <section class="mb-10">
-            <!-- Loader d'attente discret -->
             <div id="loading-state" class="py-12 text-center text-slate-500 font-medium">
                 <div class="inline-block animate-spin rounded-full h-5 w-5 border-2 border-slate-300 border-t-cyan-600"></div>
             </div>
 
-            <!-- Conteneur de rendu unique -->
             <div id="dictionary-list" class="bg-white border border-slate-200 rounded-lg shadow-xs divide-y divide-slate-100 overflow-hidden hidden"></div>
         </section>
 
-        <!-- Bouton & Section d'Ajout d'un nouveau mot -->
         <section class="mb-12">
             <button 
+                type="button"
                 id="toggle-add-form-btn"
                 onclick="toggleAddForm()" 
                 class="w-full py-4 bg-[#002B49] text-white font-bold text-sm uppercase tracking-wider rounded-lg shadow-sm hover:bg-cyan-900 transition-all cursor-pointer flex items-center justify-center space-x-2"
@@ -125,7 +116,6 @@
                 <span>Ajouter un nouveau mot</span>
             </button>
 
-            <!-- Formulaire replié par défaut -->
             <div id="add-word-form-container" class="mt-4 bg-white border border-slate-200 rounded-lg p-6 shadow-xs max-h-0 overflow-hidden opacity-0 transition-all duration-300 ease-in-out">
                 <div class="grid grid-cols-1 gap-4 text-sm">
                     <div>
@@ -152,12 +142,14 @@
                     </div>
                     <div class="pt-2 flex items-center space-x-2">
                         <button 
+                            type="button"
                             onclick="createWord()" 
                             class="px-6 py-3 bg-emerald-600 text-white font-bold uppercase tracking-wider rounded-md hover:bg-emerald-700 shadow-sm transition-all cursor-pointer text-xs"
                         >
                             Ajouter mon mot
                         </button>
                         <button 
+                            type="button"
                             onclick="toggleAddForm()" 
                             class="px-6 py-3 bg-slate-100 text-slate-700 font-bold uppercase tracking-wider rounded-md hover:bg-slate-200 shadow-sm transition-all cursor-pointer text-xs"
                         >
@@ -172,7 +164,6 @@
 
     <footer class="py-12"></footer>
 
-    <!-- Logique Applicative Unifiée -->
     <script>
         const SUPABASE_URL = 'https://goviudqrftefrnrdamxk.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdvdml1ZHFyZnRlZnJucmRhbXhrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI5MTYxOTYsImV4cCI6MjA5ODQ5MjE5Nn0.BnjHGjgCD3uVch5kT2FyRiGXzAVM9k6rMpq4p2Hhci4';
@@ -200,8 +191,8 @@
 
                 dictionaryData = data || [];
                 
-                loadingState.classList.add('hidden');
-                dictionaryList.classList.remove('hidden');
+                if (loadingState) loadingState.classList.add('hidden');
+                if (dictionaryList) dictionaryList.classList.remove('hidden');
                 
                 sortAndRenderDictionary(dictionaryData);
             } catch (error) {
@@ -209,19 +200,19 @@
             }
         }
 
-        // Tri A-Z systématique côté client pour blinder l'affichage
         function sortAndRenderDictionary(data) {
             data.sort((a, b) => a.term.localeCompare(b.term, 'fr', { sensitivity: 'base' }));
             renderDictionary(data);
         }
 
         function renderDictionary(data) {
+            if (!dictionaryList) return;
             dictionaryList.innerHTML = data.map(item => `
                 <div class="dictionary-item group transition-colors duration-150 bg-white" id="term-${slugify(item.term)}">
                     
-                    <!-- Entête de ligne de la Notion -->
                     <div class="w-full flex items-center justify-between px-6 py-5 border-b border-slate-100 bg-white">
                         <button 
+                            type="button"
                             onclick="toggleAccordion('content-${item.id}', 'icon-${item.id}')"
                             class="flex-1 text-left cursor-pointer focus:outline-hidden"
                         >
@@ -230,15 +221,16 @@
                             </span>
                         </button>
                         
-                        <!-- Actions Collaboratives -->
                         <div class="flex items-center space-x-2">
                             <button 
+                                type="button"
                                 onclick="enableInlineEdit('${item.id}')" 
                                 class="text-xs font-bold text-cyan-600 bg-cyan-50 px-2.5 py-1.5 rounded hover:bg-cyan-100 transition-all cursor-pointer flex items-center space-x-1"
                             >
                                 <span>🖋️ Modifier</span>
                             </button>
                             <button 
+                                type="button"
                                 onclick="deleteWord('${item.id}', '${item.term.replace(/'/g, "\\'")}')" 
                                 class="text-xs font-bold text-rose-600 bg-rose-50 px-2.5 py-1.5 rounded hover:bg-rose-100 transition-all cursor-pointer flex items-center space-x-1"
                                 title="Supprimer définitivement"
@@ -246,6 +238,7 @@
                                 <span>🗑️</span>
                             </button>
                             <button 
+                                type="button"
                                 onclick="toggleAccordion('content-${item.id}', 'icon-${item.id}')"
                                 class="p-1 cursor-pointer"
                             >
@@ -256,10 +249,8 @@
                         </div>
                     </div>
 
-                    <!-- Tiroir Accordéon Dépliable -->
                     <div id="content-${item.id}" class="accordion-content max-h-0 overflow-hidden opacity-0 bg-slate-50/30">
                         
-                        <!-- Mode Lecture -->
                         <div class="px-6 pb-6 pt-4 space-y-4 text-slate-800" id="view-mode-${item.id}">
                             <div class="text-base leading-relaxed text-slate-600 font-normal border-b border-slate-100 pb-4">
                                 ${item.definition || '<em class="text-slate-400">Aucune définition renseignée.</em>'}
@@ -288,7 +279,6 @@
                             ` : ''}
                         </div>
 
-                        <!-- Mode Édition (Correction de hauteur Max-Height et overflow coupés) -->
                         <div class="px-6 pb-6 pt-4 space-y-4 text-slate-800 hidden" id="edit-mode-${item.id}">
                             <div class="space-y-4 text-sm">
                                 <div>
@@ -310,8 +300,8 @@
                                     <input type="text" id="edit-ques-${item.id}" value="${item.management_questions || ''}" class="w-full p-2.5 bg-white border border-slate-200 rounded-md focus:outline-cyan-600">
                                 </div>
                                 <div class="flex items-center space-x-2 pt-2 pb-2">
-                                    <button onclick="saveInlineEdit('${item.id}')" class="px-5 py-2.5 bg-emerald-600 text-white font-bold text-xs uppercase tracking-wider rounded shadow-sm hover:bg-emerald-700 cursor-pointer">Enregistrer</button>
-                                    <button onclick="disableInlineEdit('${item.id}')" class="px-5 py-2.5 bg-slate-200 text-slate-700 font-bold text-xs uppercase tracking-wider rounded hover:bg-slate-300 cursor-pointer">Annuler</button>
+                                    <button type="button" onclick="saveInlineEdit('${item.id}')" class="px-5 py-2.5 bg-emerald-600 text-white font-bold text-xs uppercase tracking-wider rounded shadow-sm hover:bg-emerald-700 cursor-pointer">Enregistrer</button>
+                                    <button type="button" onclick="disableInlineEdit('${item.id}')" class="px-5 py-2.5 bg-slate-200 text-slate-700 font-bold text-xs uppercase tracking-wider rounded hover:bg-slate-300 cursor-pointer">Annuler</button>
                                 </div>
                             </div>
                         </div>
@@ -320,13 +310,10 @@
             `).join('');
         }
 
-        // Gestion du déploiement sécurisé pour l'édition
         function enableInlineEdit(id) {
             const content = document.getElementById(`content-${id}`);
             const icon = document.getElementById(`icon-${id}`);
-            
             if (content) {
-                // On fait sauter les verrous de hauteur et de masquage pour éviter que les boutons soient tronqués
                 content.style.maxHeight = "none"; 
                 content.style.opacity = "1";
                 content.classList.remove("overflow-hidden");
@@ -347,7 +334,6 @@
             }
         }
 
-        // Sauvegarde de l'édition en ligne vers Supabase
         async function saveInlineEdit(id) {
             const definition = document.getElementById(`edit-def-${id}`).value.trim();
             const opportunities = document.getElementById(`edit-opp-${id}`).value.trim();
@@ -377,7 +363,6 @@
             }
         }
 
-        // Suppression de mot sécurisée par boîte de dialogue
         async function deleteWord(id, termName) {
             const confirmed = confirm(`Voulez-vous vraiment supprimer le mot "${termName}" ?`);
             if (!confirmed) return;
@@ -390,7 +375,6 @@
 
                 if (error) throw error;
 
-                // Mise à jour de l'état local
                 dictionaryData = dictionaryData.filter(item => item.id !== id);
                 sortAndRenderDictionary(dictionaryData);
             } catch (error) {
@@ -398,19 +382,19 @@
             }
         }
 
-        // Formulaire d'ajout repliable
         function toggleAddForm() {
+            if (!addWordFormContainer) return;
             if (addWordFormContainer.style.maxHeight && addWordFormContainer.style.maxHeight !== '0px') {
                 addWordFormContainer.style.maxHeight = '0px';
                 addWordFormContainer.style.opacity = '0';
             } else {
                 addWordFormContainer.style.maxHeight = '1000px';
                 addWordFormContainer.style.opacity = '1';
-                document.getElementById('new-term').focus();
+                const newTermInput = document.getElementById('new-term');
+                if (newTermInput) newTermInput.focus();
             }
         }
 
-        // Création d'un mot de A à Z vers Supabase
         async function createWord() {
             const term = document.getElementById('new-term').value.trim();
             const definition = document.getElementById('new-definition').value.trim();
@@ -436,16 +420,14 @@
                 }
                 
                 sortAndRenderDictionary(dictionaryData);
-                toggleAddForm(); // Replie le formulaire d'ajout
+                toggleAddForm(); 
                 
-                // Reset inputs
                 document.getElementById('new-term').value = '';
                 document.getElementById('new-definition').value = '';
                 document.getElementById('new-opportunities').value = '';
                 document.getElementById('new-risks').value = '';
                 document.getElementById('new-questions').value = '';
 
-                // Centrage et déploiement immédiat de la nouvelle carte créée
                 setTimeout(() => { scrollToAndOpen(term); }, 300);
 
             } catch (error) {
@@ -480,8 +462,10 @@
         }
 
         function triggerSearch() {
-            const query = searchInput.value.trim();
-            if (query) { scrollToAndOpen(query); }
+            if (searchInput) {
+                const query = searchInput.value.trim();
+                if (query) { scrollToAndOpen(query); }
+            }
         }
 
         function setupKeyboardEvent() {
@@ -495,7 +479,7 @@
         function toggleAccordion(contentId, iconId) {
             const content = document.getElementById(contentId);
             const icon = document.getElementById(iconId);
-            if (!content || !icon || document.getElementById(contentId).previousElementSibling.querySelector('button').classList.contains('hidden')) return;
+            if (!content || !icon) return;
             
             if (content.style.maxHeight && content.style.maxHeight !== '0px') {
                 content.style.maxHeight = '0px';
